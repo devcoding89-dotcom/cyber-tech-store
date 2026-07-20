@@ -283,10 +283,10 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
         <div className="p-6 border-b border-white/10">
           <button onClick={() => navigate('/')} className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-lg gradient-gold flex items-center justify-center">
-              <span className="text-black font-bold text-lg font-['Orbitron']">K</span>
+              <span className="text-black font-bold text-lg font-['Orbitron']">C</span>
             </div>
             <div>
-              <h1 className="text-white font-bold font-['Orbitron']">KHALEX</h1>
+              <h1 className="text-white font-bold font-['Orbitron']">CYBER TECH</h1>
               <p className="text-[#FFD700] text-xs">Admin Portal</p>
             </div>
           </button>

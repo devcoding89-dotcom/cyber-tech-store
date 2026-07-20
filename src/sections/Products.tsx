@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Phone, Gamepad2, Coins, ChevronRight, Flame, Sparkles, TrendingUp } from 'lucide-react';
+import { Phone, Zap, BatteryCharging, Shield, Flame, Sparkles, TrendingUp, Cable } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -10,8 +10,9 @@ import type { Product, Category } from '@/types/database';
 const categories = [
   { id: 'featured' as const, name: 'Featured', icon: Flame, description: 'Handpicked best sellers' },
   { id: 'phones' as Category, name: 'Phones', icon: Phone, description: 'Latest smartphones' },
-  { id: 'accounts' as Category, name: 'CoD Accounts', icon: Gamepad2, description: 'Pre-leveled accounts' },
-  { id: 'cp' as Category, name: 'CP Points', icon: Coins, description: 'Instant top-up' },
+  { id: 'chargers' as Category, name: 'Chargers', icon: Zap, description: 'Fast chargers & cables' },
+  { id: 'powerbanks' as Category, name: 'Powerbanks', icon: BatteryCharging, description: 'High-capacity power banks' },
+  { id: 'accessories' as Category, name: 'Accessories', icon: Cable, description: 'Cases, protectors & other gear' },
 ];
 
 export default function Products() {
@@ -89,8 +90,8 @@ export default function Products() {
             EXPLORE OUR <span className="text-[#FFD700]">COLLECTION</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Browse our extensive collection of premium phones, Call of Duty accounts, and CP points. 
-            All products come with instant delivery and full warranty.
+            Browse our extensive collection of premium phones, high-speed chargers, high-capacity power banks, and accessories. 
+            All products come with direct support and full warranty.
           </p>
         </div>
 
@@ -156,9 +157,9 @@ export default function Products() {
         <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           {[
             { icon: TrendingUp, title: 'Best Prices', desc: 'Competitive rates' },
-            { icon: Sparkles, title: 'Verified', desc: '100% authentic' },
-            { icon: Flame, title: 'Instant', desc: 'Immediate delivery' },
-            { icon: Gamepad2, title: 'Support', desc: '24/7 assistance' },
+            { icon: Sparkles, title: 'Genuine Tech', desc: '100% authentic' },
+            { icon: Flame, title: 'Warranty', desc: 'Full product coverage' },
+            { icon: Shield, title: 'Secure Shop', desc: 'Buyer protection' },
           ].map((badge) => (
             <div
               key={badge.title}

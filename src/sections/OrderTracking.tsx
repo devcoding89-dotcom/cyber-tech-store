@@ -13,7 +13,7 @@ interface TrackingStep {
   current: boolean;
 }
 
-const WHATSAPP_NUMBER = '23481225541898';
+const WHATSAPP_NUMBER = '2349138987295';
 
 export default function OrderTracking() {
   const [trackingId, setTrackingId] = useState('');
@@ -88,7 +88,7 @@ export default function OrderTracking() {
   };
 
   const openWhatsApp = () => {
-    const message = `Hello Khalex Hub!%0AI'm checking on my order.%0A*Tracking ID:* ${trackingId}`;
+    const message = `Hello Cyber Tech Store!%0AI'm checking on my order.%0A*Tracking ID:* ${trackingId}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
     window.open(url, '_blank');
   };

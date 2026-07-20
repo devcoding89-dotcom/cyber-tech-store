@@ -145,7 +145,7 @@ export default function Hero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 animate-fade-in">
           <Sparkles className="w-4 h-4 text-[#FFD700]" />
-          <span className="text-sm font-medium text-gray-300">Premium Gaming Marketplace</span>
+          <span className="text-sm font-medium text-gray-300">Premium Tech & Accessories</span>
         </div>
 
         {/* Main Title */}
@@ -153,14 +153,14 @@ export default function Hero() {
           <span className="text-white">WELCOME TO</span>
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFA500] to-[#FFD700] text-glow-gold">
-            KHALEX HUB
+            CYBER TECH STORE
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-          Your ultimate destination for premium phones, Call of Duty accounts, and CP points. 
-          Instant delivery, verified sellers, 24/7 support.
+          Your ultimate destination for premium smartphones, fast chargers, powerbanks, and phone accessories. 
+          Certified quality, warranty, and 24/7 support.
         </p>
 
         {/* CTA Buttons */}
@@ -174,10 +174,10 @@ export default function Hero() {
           </Button>
           <Button
             variant="outline"
-            onClick={() => document.querySelector('#accounts')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.querySelector('#chargers')?.scrollIntoView({ behavior: 'smooth' })}
             className="btn-secondary text-lg px-8 py-6"
           >
-            View Accounts
+            Shop Chargers
           </Button>
         </div>
 

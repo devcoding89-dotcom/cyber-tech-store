@@ -150,7 +150,7 @@ export default function Cart() {
               {/* Actions */}
               <div className="space-y-3">
                 <Button
-                  onClick={() => setShowCheckout(true)}
+                  onClick={() => { setCartOpen(false); setShowCheckout(true); }}
                   className="w-full bg-green-500 hover:bg-green-600 text-white py-6 text-lg"
                 >
                   <MessageCircle className="w-5 h-5 mr-2" />

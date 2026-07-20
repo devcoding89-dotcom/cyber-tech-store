@@ -1,4 +1,4 @@
-export type Category = 'phones' | 'accounts' | 'cp';
+export type Category = 'phones' | 'chargers' | 'powerbanks' | 'accessories';
 
 export interface Product {
   id: string;

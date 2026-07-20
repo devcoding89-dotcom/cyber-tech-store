@@ -8,26 +8,17 @@ interface OrderSuccessProps {
   onClose: () => void;
 }
 
-const WHATSAPP_NUMBER = '23481225541898';
+const WHATSAPP_NUMBER = '2349138987295';
 
 export default function OrderSuccess({ orderId, trackingId, onClose }: OrderSuccessProps) {
-  // Auto-redirect to WhatsApp after 5 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      openWhatsApp();
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const openWhatsApp = () => {
-    const message = `Hello Khalex Hub!%0A%0A` +
+    const message = `Hello Cyber Tech Store!%0A%0A` +
       `I just placed an order.%0A%0A` +
       `*Order ID:* ${orderId}%0A` +
       `*Tracking ID:* ${trackingId}%0A%0A` +
       `Please confirm my order.`;
     
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${message}`;
     window.open(url, '_blank');
   };
 
@@ -98,7 +89,7 @@ export default function OrderSuccess({ orderId, trackingId, onClose }: OrderSucc
         {/* WhatsApp CTA */}
         <div className="space-y-4">
           <p className="text-gray-400 text-sm">
-            Redirecting to WhatsApp in 5 seconds...
+            Please confirm your order by sending the message on WhatsApp.
           </p>
           
           <Button

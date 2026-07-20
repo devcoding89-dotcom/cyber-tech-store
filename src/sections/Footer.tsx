@@ -1,10 +1,11 @@
-import { Phone, Gamepad2, Coins, Mail, MessageCircle, Shield, Instagram, Twitter, Youtube, Twitch } from 'lucide-react';
+import { Phone, Zap, Mail, MessageCircle, Shield, Instagram, Twitter, Youtube, Cable, Building2 } from 'lucide-react';
 
 const footerLinks = {
   products: [
     { name: 'Smartphones', href: '#phones' },
-    { name: 'CoD Accounts', href: '#accounts' },
-    { name: 'CP Points', href: '#cp' },
+    { name: 'Chargers', href: '#chargers' },
+    { name: 'Powerbanks', href: '#powerbanks' },
+    { name: 'Accessories', href: '#accessories' },
     { name: 'New Arrivals', href: '#featured' },
   ],
   support: [
@@ -25,7 +26,6 @@ const socialLinks = [
   { name: 'Instagram', icon: Instagram, href: '#' },
   { name: 'Twitter', icon: Twitter, href: '#' },
   { name: 'YouTube', icon: Youtube, href: '#' },
-  { name: 'Twitch', icon: Twitch, href: '#' },
 ];
 
 export default function Footer() {
@@ -54,22 +54,22 @@ export default function Footer() {
             <a href="#home" className="flex items-center gap-2 mb-6">
               <div className="relative w-10 h-10 flex items-center justify-center">
                 <div className="absolute inset-0 gradient-gold rounded-lg rotate-45" />
-                <span className="relative text-black font-bold text-lg font-['Orbitron']">K</span>
+                <span className="relative text-black font-bold text-lg font-['Orbitron']">C</span>
               </div>
               <span className="text-xl font-bold font-['Orbitron'] text-white">
-                KHALEX<span className="text-[#FFD700]">HUB</span>
+                CYBER TECH<span className="text-[#FFD700]"> STORE</span>
               </span>
             </a>
             <p className="text-gray-400 text-sm mb-6 max-w-sm">
-              Your trusted marketplace for premium phones, Call of Duty accounts, and CP points. 
-              Instant delivery, verified products, 24/7 support.
+              Your trusted marketplace for premium phones, chargers, powerbanks, and phone accessories. 
+              Certified products, manufacturer warranty, and 24/7 support.
             </p>
             
             {/* Contact Info */}
             <div className="space-y-3">
-              <a href="mailto:support@khalexhub.com" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
+              <a href="mailto:support@cybertechstore.com" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
                 <Mail className="w-4 h-4 text-[#FFD700]" />
-                support@khalexhub.com
+                support@cybertechstore.com
               </a>
               <a href="#" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
                 <MessageCircle className="w-4 h-4 text-[#06B6D4]" />
@@ -139,7 +139,7 @@ export default function Footer() {
           {/* Company */}
           <div>
             <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-              <Gamepad2 className="w-4 h-4 text-[#9333EA]" />
+              <Building2 className="w-4 h-4 text-[#9333EA]" />
               Company
             </h4>
             <ul className="space-y-3">
@@ -163,7 +163,7 @@ export default function Footer() {
             {[
               { icon: Shield, label: 'Secure Payments' },
               { icon: Phone, label: 'Verified Products' },
-              { icon: Coins, label: 'Instant Delivery' },
+              { icon: Zap, label: 'Fast Warranty' },
               { icon: MessageCircle, label: '24/7 Support' },
             ].map((badge) => (
               <div key={badge.label} className="flex items-center gap-2 text-gray-500">
@@ -177,7 +177,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">
-            © 2024 Khalex Hub. All rights reserved.
+            © 2024 Cyber Tech Store. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">

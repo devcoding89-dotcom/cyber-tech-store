@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShoppingCart, Menu, Phone, Gamepad2, Coins, Home, MapPin, Shield } from 'lucide-react';
+import { ShoppingCart, Menu, Phone, Zap, BatteryCharging, Home, MapPin, Shield, Cable } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '@/store/cartStore';
 import { Button } from '@/components/ui/button';
@@ -8,8 +8,9 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 const navLinks = [
   { name: 'Home', href: '#home', icon: Home },
   { name: 'Phones', href: '#phones', icon: Phone },
-  { name: 'Accounts', href: '#accounts', icon: Gamepad2 },
-  { name: 'CP Points', href: '#cp', icon: Coins },
+  { name: 'Chargers', href: '#chargers', icon: Zap },
+  { name: 'Powerbanks', href: '#powerbanks', icon: BatteryCharging },
+  { name: 'Accessories', href: '#accessories', icon: Cable },
   { name: 'Track Order', href: '#tracking', icon: MapPin },
 ];
 
@@ -53,10 +54,10 @@ export default function Navigation() {
           >
             <div className="relative w-10 h-10 flex items-center justify-center">
               <div className="absolute inset-0 gradient-gold rounded-lg rotate-45 group-hover:rotate-90 transition-transform duration-500" />
-              <span className="relative text-black font-bold text-lg font-['Orbitron']">K</span>
+              <span className="relative text-black font-bold text-lg font-['Orbitron']">C</span>
             </div>
             <span className="text-xl font-bold font-['Orbitron'] text-white group-hover:text-[#FFD700] transition-colors">
-              KHALEX<span className="text-[#FFD700]">HUB</span>
+              CYBER TECH<span className="text-[#FFD700]"> STORE</span>
             </span>
           </button>
 

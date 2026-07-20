@@ -1,7 +1,7 @@
 // Khalex Hub - Product Database
 // Real products with actual market data
 
-export type Category = 'phones' | 'accounts' | 'cp';
+export type Category = 'phones' | 'chargers' | 'powerbanks' | 'accessories';
 
 export interface Product {
   id: string;
@@ -27,14 +27,17 @@ export interface CartItem extends Product {
 // PHONES - Empty by default, add through admin panel
 export const phones: Product[] = [];
 
-// CALL OF DUTY ACCOUNTS - Empty by default, add through admin panel
-export const codAccounts: Product[] = [];
+// CHARGERS - Empty by default, add through admin panel
+export const chargers: Product[] = [];
 
-// CALL OF DUTY POINTS (CP) - Empty by default, add through admin panel
-export const codPoints: Product[] = [];
+// POWERBANKS - Empty by default, add through admin panel
+export const powerbanks: Product[] = [];
+
+// ACCESSORIES - Empty by default, add through admin panel
+export const accessories: Product[] = [];
 
 // All products combined
-export const allProducts: Product[] = [...phones, ...codAccounts, ...codPoints];
+export const allProducts: Product[] = [...phones, ...chargers, ...powerbanks, ...accessories];
 
 // Get products by category
 export const getProductsByCategory = (category: Category): Product[] => {

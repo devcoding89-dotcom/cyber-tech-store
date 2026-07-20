@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, Search, Edit2, Trash2, Upload, ImageIcon, RotateCw } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, Upload, ImageIcon, RotateCw, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,8 +12,9 @@ import type { Product, Category } from '@/types/database';
 
 const categories: { value: Category; label: string }[] = [
   { value: 'phones', label: 'Phones' },
-  { value: 'accounts', label: 'CoD Accounts' },
-  { value: 'cp', label: 'CP Points' },
+  { value: 'chargers', label: 'Chargers' },
+  { value: 'powerbanks', label: 'Powerbanks' },
+  { value: 'accessories', label: 'Accessories' },
 ];
 
 export default function ProductsManager() {
@@ -179,14 +180,14 @@ export default function ProductsManager() {
         name: formData.name.trim(),
         description: formData.description.trim(),
         price: parseFloat(formData.price),
-        original_price: formData.original_price ? parseFloat(formData.original_price) : null,
+        original_price: formData.original_price ? parseFloat(formData.original_price) : undefined,
         category: formData.category,
         image: imageUrl,
         stock: parseInt(formData.stock),
         rating: parseFloat(formData.rating),
         reviews: parseInt(formData.reviews),
         features: formData.features.split(',').map(f => f.trim()).filter(f => f),
-        badge: formData.badge?.trim() || null,
+        badge: formData.badge?.trim() || undefined,
         is_new: formData.is_new,
         is_bestseller: formData.is_bestseller,
       };
@@ -423,7 +424,7 @@ export default function ProductsManager() {
                           />
                         ) : (
                           <div className="flex flex-col items-center gap-2">
-                            <Upload className="w-8 h-8 text-gray-500" />
+                            <Building2 className="w-8 h-8 text-gray-500" />
                             <span className="text-sm text-gray-300">Click to upload image</span>
                             <span className="text-xs text-gray-500">JPG, PNG up to 5MB</span>
                           </div>

@@ -64,7 +64,7 @@ export default function OrdersManager() {
   };
 
   const openWhatsApp = (phone: string, orderId: string) => {
-    const message = `Hello! Regarding your order ${orderId} from Khalex Hub.`;
+    const message = `Hello! Regarding your order ${orderId} from Cyber Tech Store.`;
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };

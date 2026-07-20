@@ -4,8 +4,8 @@ import Navigation from './sections/Navigation';
 import Hero from './sections/Hero';
 import Products from './sections/Products';
 import PhonesSection from './sections/PhonesSection';
-import AccountsSection from './sections/AccountsSection';
-import CPPointsSection from './sections/CPPointsSection';
+import ChargersSection from './sections/ChargersSection';
+import PowerbanksSection from './sections/PowerbanksSection';
 import OrderTracking from './sections/OrderTracking';
 import Cart from './sections/Cart';
 import Footer from './sections/Footer';
@@ -46,8 +46,8 @@ function MainApp() {
         <Hero />
         <Products />
         <PhonesSection />
-        <AccountsSection />
-        <CPPointsSection />
+        <ChargersSection />
+        <PowerbanksSection />
         <OrderTracking />
       </main>
       <Footer />

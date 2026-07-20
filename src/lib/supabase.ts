@@ -21,8 +21,8 @@ if (typeof window !== 'undefined') {
 }
 
 // Admin credentials (in production, use proper auth)
-const ADMIN_EMAIL = 'admin@khalexhub.com';
-const ADMIN_PASSWORD = 'admin123';
+const ADMIN_EMAIL = 'khaleed';
+const ADMIN_PASSWORD = 'Khaleed@890';
 
 // ==================== PRODUCTS ====================
 

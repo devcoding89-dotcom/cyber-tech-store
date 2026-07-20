@@ -57,22 +57,22 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
           <h1 className="text-3xl font-bold font-['Orbitron'] text-white mb-2">
             Admin <span className="text-[#FFD700]">Portal</span>
           </h1>
-          <p className="text-gray-400">Khalex Hub Management</p>
+          <p className="text-gray-400">Cyber Tech Store Management</p>
         </div>
 
         {/* Login Form */}
         <div className="glass rounded-2xl p-8 border border-white/10">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-300">Email</Label>
+              <Label htmlFor="email" className="text-gray-300">Username</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <Input
                   id="email"
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@khalexhub.com"
+                  placeholder="khaleed"
                   className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#FFD700] focus:ring-[#FFD700]/20"
                   required
                 />

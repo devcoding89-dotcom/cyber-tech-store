@@ -4,14 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCartStore } from '@/store/cartStore';
-import { generateOrderId, generateTrackingId } from '@/lib/supabase';
+import { generateOrderId, generateTrackingId, createOrder } from '@/lib/supabase';
 
 interface WhatsAppCheckoutProps {
   onClose: () => void;
   onSuccess: (orderId: string, trackingId: string) => void;
 }
 
-const WHATSAPP_NUMBER = '23481225541898';
+const WHATSAPP_NUMBER = '2349138987295';
 
 export default function WhatsAppCheckout({ onClose, onSuccess }: WhatsAppCheckoutProps) {
   const { items, getTotalPrice } = useCartStore();
@@ -51,7 +51,7 @@ export default function WhatsAppCheckout({ onClose, onSuccess }: WhatsAppCheckou
     ).join('%0A');
 
     const message = 
-      `*NEW ORDER - KHALEX HUB*%0A%0A` +
+      `*NEW ORDER - CYBER TECH STORE*%0A%0A` +
       `*Order ID:* ${orderId}%0A` +
       `*Tracking ID:* ${trackingId}%0A%0A` +
       `*Customer Details:*%0A` +
@@ -62,8 +62,32 @@ export default function WhatsAppCheckout({ onClose, onSuccess }: WhatsAppCheckou
       `*Total Amount: ₦${totalAmount.toLocaleString()}*%0A%0A` +
       `Please confirm my order. Thank you!`;
 
+    // Save order to Supabase
+    try {
+      await createOrder({
+        order_id: orderId,
+        tracking_id: trackingId,
+        customer_name: customerInfo.name,
+        customer_email: customerInfo.email || 'N/A',
+        customer_phone: customerInfo.phone,
+        whatsapp_number: WHATSAPP_NUMBER,
+        items: items.map(item => ({
+          product_id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image
+        })),
+        total_amount: totalAmount,
+        status: 'pending',
+        payment_status: 'pending'
+      });
+    } catch (dbErr) {
+      console.error('Error saving order to Supabase:', dbErr);
+    }
+
     // Open WhatsApp
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${message}`;
     window.open(url, '_blank');
 
     // Success
