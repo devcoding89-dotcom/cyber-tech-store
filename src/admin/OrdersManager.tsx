@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Search, Eye, Package, Truck, CheckCircle, XCircle, Clock, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,6 +46,9 @@ export default function OrdersManager() {
       setOrders(orders.map(o => 
         o.order_id === orderId ? { ...o, status: newStatus } : o
       ));
+      if (selectedOrder && selectedOrder.order_id === orderId) {
+        setSelectedOrder({ ...selectedOrder, status: newStatus });
+      }
     }
   };
 

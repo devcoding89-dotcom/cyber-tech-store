@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { ArrowLeft, MessageCircle, Send, User, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +14,7 @@ interface WhatsAppCheckoutProps {
 const WHATSAPP_NUMBER = '2349138987295';
 
 export default function WhatsAppCheckout({ onClose, onSuccess }: WhatsAppCheckoutProps) {
-  const { items, getTotalPrice } = useCartStore();
+  const { items, getTotalPrice, clearCart } = useCartStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -85,6 +85,9 @@ export default function WhatsAppCheckout({ onClose, onSuccess }: WhatsAppCheckou
     } catch (dbErr) {
       console.error('Error saving order to Supabase:', dbErr);
     }
+
+    // Clear cart immediately upon ordering
+    clearCart();
 
     // Open WhatsApp
     const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${message}`;

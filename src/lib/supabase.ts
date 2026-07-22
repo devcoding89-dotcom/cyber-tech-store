@@ -1,4 +1,4 @@
-﻿import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import type { Product, Order, TrackingUpdate } from '@/types/database';
 
 // Supabase project credentials – hardcoded to ensure clean values in every build
@@ -247,29 +247,29 @@ export async function deleteProduct(id: string): Promise<boolean> {
 // ==================== ORDERS ====================
 
 export async function createOrder(order: Omit<Order, 'id' | 'created_at'>): Promise<Order | null> {
-  if (!isSupabaseConfigured || !supabase) {
+  const client = adminSupabase || supabase;
+  if (!client) {
     console.error('❌ Supabase is not configured. createOrder failed.');
     return null;
   }
 
-  const newOrder: Order = {
-    ...order,
-    id: 'order-' + Date.now().toString(36),
-    created_at: new Date().toISOString(),
-  };
+  const payload: Record<string, any> = { ...order };
+  delete payload.id;
+  delete payload.created_at;
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from('orders')
-      .insert([newOrder])
+      .insert([payload])
       .select()
       .single();
 
     if (error) {
-      console.error('❌ Error creating order in Supabase:', error);
+      console.error('❌ Error creating order in Supabase:', error.message || error);
       return null;
     }
 
+    console.log('✅ Order created successfully in Supabase:', data?.order_id);
     return data;
   } catch (err) {
     console.error('❌ Exception creating order in Supabase:', err);
@@ -278,17 +278,14 @@ export async function createOrder(order: Omit<Order, 'id' | 'created_at'>): Prom
 }
 
 export async function getOrderById(orderId: string): Promise<Order | null> {
-  if (!isSupabaseConfigured || !supabase) {
-    console.error('❌ Supabase is not configured. getOrderById failed.');
-    return null;
-  }
-
+  if (!supabase) return null;
+  const cleanId = orderId.trim();
   try {
     const { data, error } = await supabase
       .from('orders')
       .select('*')
-      .eq('order_id', orderId)
-      .single();
+      .or(`order_id.eq.${cleanId},tracking_id.eq.${cleanId}`)
+      .maybeSingle();
 
     if (error) {
       console.error('❌ Error fetching order from Supabase:', error);
@@ -302,23 +299,48 @@ export async function getOrderById(orderId: string): Promise<Order | null> {
   }
 }
 
+export async function getOrderBySearch(query: string): Promise<Order | null> {
+  if (!supabase) return null;
+  const cleanQuery = query.trim();
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .or(`order_id.ilike.%${cleanQuery}%,tracking_id.ilike.%${cleanQuery}%`)
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      console.error('❌ Error searching order:', error);
+      return null;
+    }
+
+    return data;
+  } catch (err) {
+    console.error('❌ Exception searching order:', err);
+    return null;
+  }
+}
+
 export async function getAllOrders(): Promise<Order[]> {
-  if (!isSupabaseConfigured || !supabase) {
+  const client = adminSupabase || supabase;
+  if (!client) {
     console.error('❌ Supabase is not configured. getAllOrders failed.');
     return [];
   }
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from('orders')
       .select('*')
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('❌ Error fetching orders from Supabase:', error);
+      console.error('❌ Error fetching orders from Supabase:', error.message || error);
       return [];
     }
 
+    console.log(`✅ Fetched ${data?.length || 0} orders from Supabase`);
     return data || [];
   } catch (err) {
     console.error('❌ Exception fetching orders from Supabase:', err);
@@ -326,16 +348,22 @@ export async function getAllOrders(): Promise<Order[]> {
   }
 }
 
-export async function updateOrderStatus(orderId: string, status: Order['status']): Promise<boolean> {
-  if (!isSupabaseConfigured || !supabase) {
+export async function updateOrderStatus(orderId: string, status: Order['status'], paymentStatus?: Order['payment_status']): Promise<boolean> {
+  const client = adminSupabase || supabase;
+  if (!client) {
     console.error('❌ Supabase is not configured. updateOrderStatus failed.');
     return false;
   }
 
+  const updates: Record<string, any> = { status };
+  if (paymentStatus) {
+    updates.payment_status = paymentStatus;
+  }
+
   try {
-    const { error } = await supabase
+    const { error } = await client
       .from('orders')
-      .update({ status })
+      .update(updates)
       .eq('order_id', orderId);
 
     if (error) {
@@ -353,21 +381,20 @@ export async function updateOrderStatus(orderId: string, status: Order['status']
 // ==================== TRACKING ====================
 
 export async function addTrackingUpdate(update: Omit<TrackingUpdate, 'id' | 'created_at'>): Promise<TrackingUpdate | null> {
-  if (!isSupabaseConfigured || !supabase) {
+  const client = adminSupabase || supabase;
+  if (!client) {
     console.error('❌ Supabase is not configured. addTrackingUpdate failed.');
     return null;
   }
 
-  const newUpdate: TrackingUpdate = {
-    ...update,
-    id: 'track-' + Date.now().toString(36),
-    created_at: new Date().toISOString(),
-  };
+  const payload: Record<string, any> = { ...update };
+  delete payload.id;
+  delete payload.created_at;
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from('tracking_updates')
-      .insert([newUpdate])
+      .insert([payload])
       .select()
       .single();
 
@@ -378,35 +405,33 @@ export async function addTrackingUpdate(update: Omit<TrackingUpdate, 'id' | 'cre
 
     return data;
   } catch (err) {
-    console.error('❌ Exception adding tracking update in Supabase:', err);
+    console.error('❌ Exception adding tracking update:', err);
     return null;
   }
 }
 
 export async function getTrackingUpdates(orderId: string): Promise<TrackingUpdate[]> {
-  if (!isSupabaseConfigured || !supabase) {
-    console.error('❌ Supabase is not configured. getTrackingUpdates failed.');
-    return [];
-  }
-
+  if (!supabase) return [];
+  const cleanId = orderId.trim();
   try {
     const { data, error } = await supabase
       .from('tracking_updates')
       .select('*')
-      .eq('order_id', orderId)
+      .or(`order_id.eq.${cleanId},tracking_id.eq.${cleanId}`)
       .order('created_at', { ascending: true });
 
     if (error) {
-      console.error('❌ Error fetching tracking updates from Supabase:', error);
+      console.error('❌ Error fetching tracking updates:', error);
       return [];
     }
 
     return data || [];
   } catch (err) {
-    console.error('❌ Exception fetching tracking updates from Supabase:', err);
+    console.error('❌ Exception fetching tracking updates:', err);
     return [];
   }
 }
+
 
 // ==================== ADMIN AUTH ====================
 

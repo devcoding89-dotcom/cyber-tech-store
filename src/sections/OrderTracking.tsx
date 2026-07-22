@@ -1,8 +1,10 @@
-﻿import { useState } from 'react';
-import { Search, Package, Truck, CheckCircle, Clock, MapPin, MessageCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Search, Package, Truck, CheckCircle, Clock, MapPin, MessageCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { getOrderBySearch, getTrackingUpdates } from '@/lib/supabase';
+import type { Order } from '@/types/database';
 
 interface TrackingStep {
   status: string;
@@ -19,9 +21,15 @@ export default function OrderTracking() {
   const [trackingId, setTrackingId] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [orderFound, setOrderFound] = useState(false);
+  const [searched, setSearched] = useState(false);
+  const [orderData, setOrderData] = useState<Order | null>(null);
   const [trackingData, setTrackingData] = useState<{
     orderId: string;
+    trackingId: string;
+    customerName: string;
     status: string;
+    totalAmount: number;
+    createdAt: string;
     steps: TrackingStep[];
   } | null>(null);
 
@@ -30,61 +38,99 @@ export default function OrderTracking() {
     if (!trackingId.trim()) return;
 
     setIsSearching(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    setSearched(true);
 
-    // Mock data for demo
-    if (trackingId.toUpperCase().startsWith('TRK-')) {
-      setOrderFound(true);
-      setTrackingData({
-        orderId: 'ORD-' + trackingId.slice(4),
-        status: 'shipped',
-        steps: [
+    try {
+      const order = await getOrderBySearch(trackingId);
+
+      if (order) {
+        setOrderFound(true);
+        setOrderData(order);
+
+        // Fetch custom tracking updates from admin
+        const updates = await getTrackingUpdates(order.order_id);
+
+        const statusRank: Record<string, number> = {
+          pending: 1,
+          paid: 2,
+          processing: 3,
+          shipped: 4,
+          delivered: 5,
+          cancelled: 0,
+        };
+
+        const currentRank = statusRank[order.status] || 1;
+
+        const defaultSteps: TrackingStep[] = [
           {
             status: 'Order Placed',
-            description: 'Your order has been received and is being processed',
-            timestamp: '2024-01-15 10:30 AM',
-            completed: true,
-            current: false,
+            description: 'Your order has been received via WhatsApp/Store',
+            timestamp: order.created_at ? new Date(order.created_at).toLocaleString() : new Date().toLocaleString(),
+            completed: currentRank >= 1,
+            current: currentRank === 1,
           },
           {
             status: 'Payment Confirmed',
-            description: 'Payment has been successfully processed',
-            timestamp: '2024-01-15 10:35 AM',
-            completed: true,
-            current: false,
+            description: order.payment_status === 'paid' ? 'Payment confirmed by store' : 'Awaiting payment confirmation via WhatsApp',
+            timestamp: order.payment_status === 'paid' ? 'Confirmed' : '',
+            completed: order.payment_status === 'paid' || currentRank >= 2,
+            current: currentRank === 2,
           },
           {
             status: 'Processing',
-            description: 'Your order is being prepared',
-            timestamp: '2024-01-15 02:00 PM',
-            completed: true,
-            current: false,
+            description: 'Order is being packaged and prepared',
+            timestamp: '',
+            completed: currentRank >= 3,
+            current: currentRank === 3,
           },
           {
             status: 'Shipped',
-            description: 'Your order has been shipped',
-            location: 'Distribution Center',
-            timestamp: '2024-01-16 09:00 AM',
-            completed: true,
-            current: true,
+            description: 'Order has been dispatched for delivery',
+            timestamp: '',
+            completed: currentRank >= 4,
+            current: currentRank === 4,
           },
           {
             status: 'Delivered',
-            description: 'Your order will be delivered soon',
+            description: 'Order delivered to customer',
             timestamp: '',
-            completed: false,
-            current: false,
+            completed: currentRank === 5,
+            current: currentRank === 5,
           },
-        ],
-      });
-    } else {
-      setOrderFound(false);
-      setTrackingData(null);
-    }
+        ];
 
-    setIsSearching(false);
+        // Add custom tracking updates
+        updates.forEach(u => {
+          defaultSteps.push({
+            status: u.status.toUpperCase(),
+            description: u.description,
+            location: u.location,
+            timestamp: u.created_at ? new Date(u.created_at).toLocaleString() : '',
+            completed: true,
+            current: false,
+          });
+        });
+
+        setTrackingData({
+          orderId: order.order_id,
+          trackingId: order.tracking_id,
+          customerName: order.customer_name,
+          status: order.status,
+          totalAmount: order.total_amount,
+          createdAt: order.created_at || new Date().toISOString(),
+          steps: defaultSteps,
+        });
+      } else {
+        setOrderFound(false);
+        setTrackingData(null);
+        setOrderData(null);
+      }
+    } catch (err) {
+      console.error('Error tracking order:', err);
+      setOrderFound(false);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const openWhatsApp = () => {
