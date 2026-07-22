@@ -82,7 +82,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-fade-in">
               {[
-                { label: 'Total Products', value: stats.totalProducts, icon: Package, color: '#EF4444', trend: '+2' },
+                { label: 'Total Products', value: stats.totalProducts, icon: Package, color: '#3B82F6', trend: '+2' },
                 { label: 'Total Orders', value: stats.totalOrders, icon: ShoppingBag, color: '#06B6D4', trend: '+12' },
                 { label: 'Revenue', value: formatPrice(stats.totalRevenue), icon: DollarSign, color: '#10B981', trend: '+18%' },
                 { label: 'Pending Orders', value: stats.pendingOrders, icon: AlertCircle, color: '#F59E0B', trend: stats.pendingOrders > 0 ? 'Action needed' : 'All clear' },
@@ -119,7 +119,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     variant="ghost" 
                     size="sm"
                     onClick={() => setActiveTab('orders')}
-                    className="text-[#EF4444] hover:text-[#EF4444] hover:bg-red-500/10 transition-all"
+                    className="text-[#3B82F6] hover:text-[#3B82F6] hover:bg-blue-500/10 transition-all"
                   >
                     View All <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
@@ -132,8 +132,8 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
-                          <ShoppingBag className="w-5 h-5 text-[#EF4444]" />
+                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                          <ShoppingBag className="w-5 h-5 text-[#3B82F6]" />
                         </div>
                         <div>
                           <p className="text-white text-sm font-medium">{order.order_id}</p>
@@ -141,7 +141,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-[#EF4444] font-semibold text-sm">₦{(order.total_amount || 0).toLocaleString()}</p>
+                        <p className="text-[#3B82F6] font-semibold text-sm">₦{(order.total_amount || 0).toLocaleString()}</p>
                         <span className={`text-xs px-2 py-1 rounded-full ${
                           order.status === 'delivered' ? 'bg-green-500/20 text-green-400' :
                           order.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
@@ -170,7 +170,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     variant="ghost" 
                     size="sm"
                     onClick={() => setActiveTab('products')}
-                    className="text-[#EF4444] hover:text-[#EF4444] hover:bg-red-500/10 transition-all"
+                    className="text-[#3B82F6] hover:text-[#3B82F6] hover:bg-blue-500/10 transition-all"
                   >
                     Manage <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
@@ -189,7 +189,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
                       </div>
                       <div className="text-right">
                         <span className={`text-sm font-semibold px-3 py-1 rounded-full ${
-                          product.stock <= 5 ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
+                          product.stock <= 5 ? 'bg-blue-500/20 text-blue-400' : 'bg-yellow-500/20 text-yellow-400'
                         }`}>
                           {product.stock} left
                         </span>
@@ -220,7 +220,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   className="h-20 flex flex-col items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10"
                   variant="ghost"
                 >
-                  <Package className="w-6 h-6 text-[#EF4444]" />
+                  <Package className="w-6 h-6 text-[#3B82F6]" />
                   <span className="text-sm">Add Product</span>
                 </Button>
                 <Button
@@ -263,7 +263,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0000] flex">
+    <div className="min-h-screen bg-[#030712] flex">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
@@ -287,7 +287,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
             </div>
             <div>
               <h1 className="text-white font-bold font-['Orbitron']">CYBER TECH</h1>
-              <p className="text-[#EF4444] text-xs">Admin Portal</p>
+              <p className="text-[#3B82F6] text-xs">Admin Portal</p>
             </div>
           </button>
         </div>
@@ -320,7 +320,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
         <div className="px-4 py-2">
           <button
             onClick={() => navigate('/')}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-[#EF4444] hover:bg-white/5 transition-all"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-[#3B82F6] hover:bg-white/5 transition-all"
           >
             <Users className="w-5 h-5" />
             Back to Store
@@ -332,7 +332,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
           <Button
             onClick={onLogout}
             variant="ghost"
-            className="w-full flex items-center gap-3 text-gray-400 hover:text-red-400 hover:bg-red-500/10"
+            className="w-full flex items-center gap-3 text-gray-400 hover:text-blue-400 hover:bg-blue-500/10"
           >
             <LogOut className="w-5 h-5" />
             Logout

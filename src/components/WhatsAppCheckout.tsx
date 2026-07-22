@@ -179,7 +179,7 @@ export default function WhatsAppCheckout({ onClose, onSuccess }: WhatsAppCheckou
               <div className="border-t border-white/10 pt-2 mt-2">
                 <div className="flex justify-between">
                   <span className="text-white font-semibold">Total</span>
-                  <span className="text-[#EF4444] font-bold text-lg">{formatPrice(totalAmount)}</span>
+                  <span className="text-[#3B82F6] font-bold text-lg">{formatPrice(totalAmount)}</span>
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles, Zap, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -32,7 +32,7 @@ export default function Hero() {
 
     const particles: Particle[] = [];
     const particleCount = 80;
-    const colors = ['#EF4444', '#DC2626', '#ffffff', '#991B1B'];
+    const colors = ['#3B82F6', '#2563EB', '#ffffff', '#1D4ED8'];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -118,12 +118,12 @@ export default function Hero() {
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0000]/50 to-[#0a0000] z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030712]/50 to-[#030712] z-[1]" />
 
       {/* Animated Background Elements */}
       <div className="absolute inset-0 z-[1] overflow-hidden">
         {/* Floating Orbs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#9333EA]/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#06B6D4]/5 rounded-full blur-[150px]" />
 
@@ -144,7 +144,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 animate-fade-in">
-          <Sparkles className="w-4 h-4 text-[#EF4444]" />
+          <Sparkles className="w-4 h-4 text-[#3B82F6]" />
           <span className="text-sm font-medium text-gray-300">Premium Tech & Accessories</span>
         </div>
 
@@ -152,7 +152,7 @@ export default function Hero() {
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-['Orbitron'] mb-6">
           <span className="text-white">WELCOME TO</span>
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EF4444] via-white to-[#EF4444] text-glow-red">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] via-[#60A5FA] to-[#3B82F6] text-glow-red">
             CYBER TECH STORE
           </span>
         </h1>
@@ -194,7 +194,7 @@ export default function Hero() {
               className="glass rounded-xl p-4 hover:bg-white/5 transition-colors group"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <stat.icon className="w-6 h-6 text-[#EF4444] mx-auto mb-2 group-hover:scale-110 transition-transform" />
+              <stat.icon className="w-6 h-6 text-[#3B82F6] mx-auto mb-2 group-hover:scale-110 transition-transform" />
               <div className="text-2xl font-bold text-white font-['Orbitron']">{stat.value}</div>
               <div className="text-xs text-gray-500">{stat.label}</div>
             </div>
@@ -203,7 +203,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0000] to-transparent z-[2]" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#030712] to-transparent z-[2]" />
     </section>
   );
 }

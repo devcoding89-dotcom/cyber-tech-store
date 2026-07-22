@@ -126,7 +126,7 @@ function CheckoutForm({ onClose, onSuccess }: StripeCheckoutProps) {
         },
       },
       invalid: {
-        color: '#ef4444',
+        color: '#3B82F6',
       },
     },
   };
@@ -225,14 +225,14 @@ function CheckoutForm({ onClose, onSuccess }: StripeCheckoutProps) {
           <div className="border-t border-white/10 pt-2 mt-2">
             <div className="flex justify-between">
               <span className="text-white font-semibold">Total</span>
-              <span className="text-[#EF4444] font-bold text-lg">${finalAmount.toFixed(2)}</span>
+              <span className="text-[#3B82F6] font-bold text-lg">${finalAmount.toFixed(2)}</span>
             </div>
           </div>
         </div>
       </div>
 
       {error && (
-        <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+        <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm">
           {error}
         </div>
       )}

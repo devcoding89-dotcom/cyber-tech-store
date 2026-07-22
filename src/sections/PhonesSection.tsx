@@ -75,22 +75,22 @@ export default function PhonesSection() {
   ];
 
   return (
-    <section ref={sectionRef} id="phones" className="relative py-24 bg-[#0a0000]">
+    <section ref={sectionRef} id="phones" className="relative py-24 bg-[#030712]">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-[200px]" />
+        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[200px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div>
-            <Badge className="mb-4 bg-red-500/10 text-[#EF4444] border-red-500/30">
+            <Badge className="mb-4 bg-blue-500/10 text-[#3B82F6] border-blue-500/30">
               <Phone className="w-3 h-3 mr-1" />
               Smartphones
             </Badge>
             <h2 className="text-4xl sm:text-5xl font-bold font-['Orbitron'] text-white mb-4">
-              PREMIUM <span className="text-[#EF4444]">PHONES</span>
+              PREMIUM <span className="text-[#3B82F6]">PHONES</span>
             </h2>
             <p className="text-gray-400 max-w-xl">
               Discover the latest flagship smartphones from top brands. 
@@ -107,7 +107,7 @@ export default function PhonesSection() {
                 <ChevronDown className="w-4 h-4 ml-2" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-[#100000] border-white/10">
+            <DropdownMenuContent className="bg-[#020510] border-white/10">
               {sortOptions.map((option) => (
                 <DropdownMenuItem
                   key={option.value}
@@ -115,7 +115,7 @@ export default function PhonesSection() {
                   className="text-gray-300 hover:text-white hover:bg-white/5 cursor-pointer"
                 >
                   {sortBy === option.value && (
-                    <Check className="w-4 h-4 mr-2 text-[#EF4444]" />
+                    <Check className="w-4 h-4 mr-2 text-[#3B82F6]" />
                   )}
                   {option.label}
                 </DropdownMenuItem>
@@ -133,7 +133,7 @@ export default function PhonesSection() {
             { label: 'Warranty', value: '1 Year' },
           ].map((stat) => (
             <div key={stat.label} className="glass rounded-lg p-4 text-center">
-              <div className="text-2xl font-bold text-[#EF4444] font-['Orbitron']">{stat.value}</div>
+              <div className="text-2xl font-bold text-[#3B82F6] font-['Orbitron']">{stat.value}</div>
               <div className="text-xs text-gray-500">{stat.label}</div>
             </div>
           ))}

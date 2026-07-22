@@ -56,8 +56,8 @@ export default function Navigation() {
               <div className="absolute inset-0 gradient-gold rounded-lg rotate-45 group-hover:rotate-90 transition-transform duration-500" />
               <span className="relative text-black font-bold text-lg font-['Orbitron']">C</span>
             </div>
-            <span className="text-xl font-bold font-['Orbitron'] text-white group-hover:text-[#EF4444] transition-colors">
-              CYBER TECH<span className="text-[#EF4444]"> STORE</span>
+            <span className="text-xl font-bold font-['Orbitron'] text-white group-hover:text-[#3B82F6] transition-colors">
+              CYBER TECH<span className="text-[#3B82F6]"> STORE</span>
             </span>
           </button>
 
@@ -80,7 +80,7 @@ export default function Navigation() {
             {/* Admin Link */}
             <Link
               to="/admin"
-              className="hidden sm:flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-400 hover:text-[#EF4444] transition-colors"
+              className="hidden sm:flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-400 hover:text-[#3B82F6] transition-colors"
             >
               <Shield className="w-4 h-4" />
               Admin
@@ -108,7 +108,7 @@ export default function Navigation() {
                   <Menu className="w-5 h-5 text-gray-300" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-72 bg-[#0a0000] border-l border-white/10">
+              <SheetContent side="right" className="w-72 bg-[#030712] border-l border-white/10">
                 <div className="flex flex-col gap-4 mt-8">
                   {navLinks.map((link) => (
                     <button
@@ -116,7 +116,7 @@ export default function Navigation() {
                       onClick={() => scrollToSection(link.href)}
                       className="px-4 py-3 text-lg font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 flex items-center gap-3 text-left"
                     >
-                      <link.icon className="w-5 h-5 text-[#EF4444]" />
+                      <link.icon className="w-5 h-5 text-[#3B82F6]" />
                       {link.name}
                     </button>
                   ))}

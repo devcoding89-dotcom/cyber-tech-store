@@ -250,7 +250,7 @@ export default function ProductsManager() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search products..."
-              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:ring-2 focus:ring-[#EF4444]/50 transition-all"
+              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:ring-2 focus:ring-[#3B82F6]/50 transition-all"
             />
           </div>
         </div>
@@ -274,7 +274,7 @@ export default function ProductsManager() {
                 Add Product
               </Button>
             </DialogTrigger>
-          <DialogContent className="max-w-2xl bg-[#100000] border-white/10 text-white max-h-[90vh] overflow-y-auto z-[100]">
+          <DialogContent className="max-w-2xl bg-[#020510] border-white/10 text-white max-h-[90vh] overflow-y-auto z-[100]">
             <DialogHeader>
               <DialogTitle className="text-white font-['Orbitron'] text-xl">
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
@@ -298,7 +298,7 @@ export default function ProductsManager() {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value as Category })}
-                    className="w-full h-10 px-3 rounded-md bg-white/5 border border-white/10 text-white focus:ring-2 focus:ring-[#EF4444]/50"
+                    className="w-full h-10 px-3 rounded-md bg-white/5 border border-white/10 text-white focus:ring-2 focus:ring-[#3B82F6]/50"
                   >
                     {categories.map(c => (
                       <option key={c.value} value={c.value}>{c.label}</option>
@@ -380,7 +380,7 @@ export default function ProductsManager() {
                       onClick={() => setImageInputMethod('url')}
                       className={`text-xs px-2 py-1 rounded ${
                         imageInputMethod === 'url'
-                          ? 'bg-[#EF4444] text-black'
+                          ? 'bg-[#3B82F6] text-black'
                           : 'bg-white/10 text-gray-300 hover:bg-white/20'
                       }`}
                     >
@@ -391,7 +391,7 @@ export default function ProductsManager() {
                       onClick={() => setImageInputMethod('upload')}
                       className={`text-xs px-2 py-1 rounded ${
                         imageInputMethod === 'upload'
-                          ? 'bg-[#EF4444] text-black'
+                          ? 'bg-[#3B82F6] text-black'
                           : 'bg-white/10 text-gray-300 hover:bg-white/20'
                       }`}
                     >
@@ -427,7 +427,7 @@ export default function ProductsManager() {
                     />
                     <label 
                       htmlFor="image-upload"
-                      className="flex items-center justify-center w-full h-40 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-red-500/50 hover:bg-white/5 transition-all bg-white/2"
+                      className="flex items-center justify-center w-full h-40 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-blue-500/50 hover:bg-white/5 transition-all bg-white/2"
                     >
                       <div className="text-center">
                         {imagePreview ? (
@@ -455,7 +455,7 @@ export default function ProductsManager() {
                       setImagePreview('');
                       setFormData({ ...formData, image: '' });
                     }}
-                    className="text-xs text-red-400 hover:text-red-300 mt-2"
+                    className="text-xs text-blue-400 hover:text-blue-300 mt-2"
                   >
                     Clear image
                   </button>
@@ -507,7 +507,7 @@ export default function ProductsManager() {
                     type="checkbox"
                     checked={formData.is_new}
                     onChange={(e) => setFormData({ ...formData, is_new: e.target.checked })}
-                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#EF4444] cursor-pointer"
+                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#3B82F6] cursor-pointer"
                   />
                   <span className="text-sm text-gray-300">Mark as New Product</span>
                 </label>
@@ -516,7 +516,7 @@ export default function ProductsManager() {
                     type="checkbox"
                     checked={formData.is_bestseller}
                     onChange={(e) => setFormData({ ...formData, is_bestseller: e.target.checked })}
-                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#EF4444] cursor-pointer"
+                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#3B82F6] cursor-pointer"
                   />
                   <span className="text-sm text-gray-300">Mark as Bestseller</span>
                 </label>
@@ -535,7 +535,7 @@ export default function ProductsManager() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 bg-[#EF4444] text-black hover:bg-[#EF4444]/90 font-semibold disabled:opacity-50"
+                  className="flex-1 bg-[#3B82F6] text-black hover:bg-[#3B82F6]/90 font-semibold disabled:opacity-50"
                 >
                   {isSubmitting ? '� Saving...' : (editingProduct ? 'Update Product' : 'Create Product')}
                 </Button>
@@ -593,7 +593,7 @@ export default function ProductsManager() {
                   </td>
                   <td className="px-6 py-4">
                     <div>
-                      <span className="text-[#EF4444] font-bold text-sm">₦{product.price.toLocaleString()}</span>
+                      <span className="text-[#3B82F6] font-bold text-sm">₦{product.price.toLocaleString()}</span>
                       {product.original_price && (
                         <span className="text-gray-500 text-xs line-through ml-2 block">₦{product.original_price.toLocaleString()}</span>
                       )}
@@ -603,7 +603,7 @@ export default function ProductsManager() {
                     <span className={`text-sm font-semibold px-3 py-1 rounded-full ${
                       product.stock > 20 ? 'bg-green-500/20 text-green-400' :
                       product.stock > 10 ? 'bg-yellow-500/20 text-yellow-400' :
-                      'bg-red-500/20 text-red-400'
+                      'bg-blue-500/20 text-blue-400'
                     }`}>
                       {product.stock} units
                     </span>
@@ -614,7 +614,7 @@ export default function ProductsManager() {
                         <Badge className="bg-blue-500/20 text-blue-400 text-xs">NEW</Badge>
                       )}
                       {product.is_bestseller && (
-                        <Badge className="bg-red-500/20 text-[#EF4444] text-xs">BEST</Badge>
+                        <Badge className="bg-blue-500/20 text-[#3B82F6] text-xs">BEST</Badge>
                       )}
                     </div>
                   </td>
@@ -633,7 +633,7 @@ export default function ProductsManager() {
                         size="icon"
                         variant="ghost"
                         onClick={() => handleDelete(product.id)}
-                        className="w-9 h-9 text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                        className="w-9 h-9 text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all"
                         title="Delete product"
                       >
                         <Trash2 className="w-4 h-4" />

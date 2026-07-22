@@ -68,7 +68,7 @@ export default function Analytics() {
             label: 'Avg Order Value', 
             value: formatPrice(stats.avgOrderValue), 
             icon: TrendingUp, 
-            color: '#EF4444',
+            color: '#3B82F6',
             trend: '+5%'
           },
           { 
@@ -108,7 +108,7 @@ export default function Analytics() {
                 processing: 'bg-purple-500',
                 shipped: 'bg-cyan-500',
                 delivered: 'bg-green-500',
-                cancelled: 'bg-red-500',
+                cancelled: 'bg-blue-500',
               };
               return (
                 <div key={status}>
@@ -139,7 +139,7 @@ export default function Analytics() {
               const totalItems = Object.values(stats.ordersByCategory).reduce((a, b) => a + b, 0);
               const percentage = totalItems > 0 ? (count / totalItems) * 100 : 0;
               const colors: Record<string, string> = {
-                phones: 'bg-[#EF4444]',
+                phones: 'bg-[#3B82F6]',
                 accounts: 'bg-[#9333EA]',
                 cp: 'bg-[#06B6D4]',
               };
@@ -177,7 +177,7 @@ export default function Analytics() {
                 className="w-full h-24 object-cover rounded-lg mb-3"
               />
               <p className="text-white text-sm font-medium truncate">{product.name}</p>
-              <p className="text-[#EF4444] text-sm">₦{product.price.toLocaleString()}</p>
+              <p className="text-[#3B82F6] text-sm">₦{product.price.toLocaleString()}</p>
               <p className="text-gray-500 text-xs">{product.reviews} reviews</p>
             </div>
           ))}
@@ -192,8 +192,8 @@ export default function Analytics() {
         <h3 className="text-lg font-semibold text-white mb-4">Business Overview</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-3">
-              <Users className="w-8 h-8 text-[#EF4444]" />
+            <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-3">
+              <Users className="w-8 h-8 text-[#3B82F6]" />
             </div>
             <p className="text-2xl font-bold text-white">{orders.length}</p>
             <p className="text-gray-500 text-sm">Total Customers</p>

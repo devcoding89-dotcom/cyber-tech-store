@@ -40,7 +40,7 @@ function MainApp() {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-[#0a0000] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#030712] text-white overflow-x-hidden">
       <Navigation />
       <main>
         <Hero />

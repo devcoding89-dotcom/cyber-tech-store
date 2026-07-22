@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+﻿import { createClient } from '@supabase/supabase-js';
 import type { Product, Order, TrackingUpdate } from '@/types/database';
 
 // Supabase project credentials – hardcoded to ensure clean values in every build
