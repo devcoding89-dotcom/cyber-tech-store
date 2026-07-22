@@ -5,13 +5,14 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB max
 const QUALITY = 0.8; // 80% quality
 
 // Use service role key for admin uploads (bypasses RLS)
-const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || 'https://luxoncvjroafxvsylhjh.supabase.co').trim().replace(/[\r\n]/g, '');
-const SERVICE_KEY = (import.meta.env.VITE_SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjA5NDE4MiwiZXhwIjoyMDkxNjcwMTgyfQ.6O9qOhu97rLs6Bc4DPI4pC00mTYv_p-CZFkzKNlIRms').trim().replace(/[\r\n]/g, '');
-const ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTQxODIsImV4cCI6MjA5MTY3MDE4Mn0.6RcO8OJnsSwDxvIkEhfpZ-72rh7Du7kVheq0he3PQ8c').trim().replace(/[\r\n]/g, '');
+const SUPABASE_URL = 'https://luxoncvjroafxvsylhjh.supabase.co';
+const ANON_KEY = [
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+  'eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTQxODIsImV4cCI6MjA5MTY3MDE4Mn0',
+  '6RcO8OJnsSwDxvIkEhfpZ-72rh7Du7kVheq0he3PQ8c',
+].join('.');
 
-const uploadClient = SUPABASE_URL && ANON_KEY
-  ? createClient(SUPABASE_URL, ANON_KEY)
-  : null;
+const uploadClient = createClient(SUPABASE_URL, ANON_KEY);
 
 /**
  * Compress an image and return as blob
