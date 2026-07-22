@@ -1,39 +1,40 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    --background: 220 20% 4%;
+    --background: 0 0% 4%;
     --foreground: 0 0% 98%;
-    --card: 220 15% 8%;
+    --card: 0 0% 7%;
     --card-foreground: 0 0% 98%;
-    --popover: 220 15% 8%;
+    --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
-    --primary: 45 100% 50%;
-    --primary-foreground: 220 20% 4%;
-    --secondary: 220 15% 12%;
+    --primary: 350 89% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 10% 60%;
-    --accent: 280 100% 60%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 350 89% 52%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 15%;
-    --input: 220 15% 15%;
-    --ring: 45 100% 50%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 350 89% 52%;
     --radius: 0.75rem;
     
-    /* Custom colors */
-    --neon-gold: 45 100% 50%;
-    --neon-purple: 280 100% 60%;
-    --neon-cyan: 180 100% 50%;
-    --neon-green: 120 100% 50%;
-    --dark-bg: 220 20% 4%;
-    --darker-bg: 220 25% 2%;
+    /* Custom colors - Black, Red, White Theme */
+    --neon-gold: 350 89% 52%; /* mapped to vibrant red */
+    --neon-red: 350 89% 52%;
+    --neon-purple: 350 75% 45%;
+    --neon-cyan: 0 0% 100%;
+    --neon-green: 140 100% 50%;
+    --dark-bg: 0 0% 4%;
+    --darker-bg: 0 0% 2%;
   }
 }
 
@@ -59,61 +60,83 @@
 @layer utilities {
   /* Neon glow effects */
   .glow-gold {
-    box-shadow: 0 0 20px hsl(var(--neon-gold) / 0.5),
-                0 0 40px hsl(var(--neon-gold) / 0.3),
-                0 0 60px hsl(var(--neon-gold) / 0.1);
+    box-shadow: 0 0 20px hsl(350 89% 52% / 0.5),
+                0 0 40px hsl(350 89% 52% / 0.3),
+                0 0 60px hsl(350 89% 52% / 0.1);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 20px hsl(350 89% 52% / 0.6),
+                0 0 40px hsl(350 89% 52% / 0.4),
+                0 0 60px hsl(350 89% 52% / 0.2);
   }
   
   .glow-purple {
-    box-shadow: 0 0 20px hsl(var(--neon-purple) / 0.5),
-                0 0 40px hsl(var(--neon-purple) / 0.3),
-                0 0 60px hsl(var(--neon-purple) / 0.1);
+    box-shadow: 0 0 20px hsl(350 75% 45% / 0.5),
+                0 0 40px hsl(350 75% 45% / 0.3),
+                0 0 60px hsl(350 75% 45% / 0.1);
   }
   
   .glow-cyan {
-    box-shadow: 0 0 20px hsl(var(--neon-cyan) / 0.5),
-                0 0 40px hsl(var(--neon-cyan) / 0.3),
-                0 0 60px hsl(var(--neon-cyan) / 0.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4),
+                0 0 40px rgba(255, 255, 255, 0.2);
   }
   
   .text-glow-gold {
-    text-shadow: 0 0 10px hsl(var(--neon-gold) / 0.8),
-                 0 0 20px hsl(var(--neon-gold) / 0.5),
-                 0 0 30px hsl(var(--neon-gold) / 0.3);
+    text-shadow: 0 0 10px hsl(350 89% 52% / 0.8),
+                 0 0 20px hsl(350 89% 52% / 0.5),
+                 0 0 30px hsl(350 89% 52% / 0.3);
+  }
+
+  .text-glow-red {
+    text-shadow: 0 0 10px hsl(350 89% 52% / 0.9),
+                 0 0 20px hsl(350 89% 52% / 0.6),
+                 0 0 30px hsl(350 89% 52% / 0.3);
   }
   
   .text-glow-purple {
-    text-shadow: 0 0 10px hsl(var(--neon-purple) / 0.8),
-                 0 0 20px hsl(var(--neon-purple) / 0.5),
-                 0 0 30px hsl(var(--neon-purple) / 0.3);
+    text-shadow: 0 0 10px hsl(350 75% 45% / 0.8),
+                 0 0 20px hsl(350 75% 45% / 0.5);
   }
   
   /* Gradient backgrounds */
   .gradient-gold {
-    background: linear-gradient(135deg, hsl(45 100% 50%), hsl(35 100% 40%));
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    color: #ffffff;
+  }
+
+  .gradient-red {
+    background: linear-gradient(135deg, #EF4444, #B91C1C);
+    color: #ffffff;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    color: #ffffff;
+    font-weight: 600;
   }
   
   .gradient-purple {
-    background: linear-gradient(135deg, hsl(280 100% 60%), hsl(260 100% 50%));
+    background: linear-gradient(135deg, #DC2626, #991B1B);
   }
   
   .gradient-dark {
-    background: linear-gradient(180deg, hsl(220 20% 4%), hsl(220 25% 2%));
+    background: linear-gradient(180deg, hsl(0 0% 4%), hsl(0 0% 2%));
   }
   
   /* Glass effect */
   .glass {
-    background: hsl(220 15% 8% / 0.8);
+    background: hsl(0 0% 7% / 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsl(220 15% 15% / 0.5);
+    border: 1px solid hsl(0 0% 15% / 0.6);
   }
   
   .glass-light {
-    background: hsl(220 15% 12% / 0.6);
+    background: hsl(0 0% 10% / 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid hsl(220 15% 20% / 0.3);
+    border: 1px solid hsl(0 0% 20% / 0.4);
   }
   
   /* Animated border */
@@ -126,7 +149,7 @@
     content: '';
     position: absolute;
     inset: -2px;
-    background: conic-gradient(from 0deg, hsl(45 100% 50%), hsl(280 100% 60%), hsl(45 100% 50%));
+    background: conic-gradient(from 0deg, #EF4444, #FFFFFF, #EF4444);
     animation: rotate 4s linear infinite;
     z-index: -1;
   }
@@ -135,7 +158,7 @@
     content: '';
     position: absolute;
     inset: 2px;
-    background: hsl(220 20% 4%);
+    background: hsl(0 0% 4%);
     border-radius: inherit;
     z-index: -1;
   }
@@ -207,11 +230,11 @@
 
   @keyframes pulseGlow {
     0%, 100% { 
-      box-shadow: 0 0 20px hsl(45 100% 50% / 0.5);
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
     }
     50% { 
-      box-shadow: 0 0 40px hsl(45 100% 50% / 0.8),
-                  0 0 60px hsl(45 100% 50% / 0.4);
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.8),
+                  0 0 60px rgba(239, 68, 68, 0.4);
     }
   }
   
@@ -244,21 +267,21 @@
   }
   
   ::-webkit-scrollbar-track {
-    background: hsl(220 20% 4%);
+    background: hsl(0 0% 4%);
   }
   
   ::-webkit-scrollbar-thumb {
-    background: hsl(220 15% 20%);
+    background: hsl(0 0% 20%);
     border-radius: 4px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(45 100% 50%);
+    background: #EF4444;
   }
   
   /* Selection */
   ::selection {
-    background: hsl(45 100% 50% / 0.3);
+    background: rgba(239, 68, 68, 0.4);
     color: hsl(0 0% 100%);
   }
 }

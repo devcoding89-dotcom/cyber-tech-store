@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { CreditCard, Lock, ArrowLeft, Loader2 } from 'lucide-react';
@@ -225,7 +225,7 @@ function CheckoutForm({ onClose, onSuccess }: StripeCheckoutProps) {
           <div className="border-t border-white/10 pt-2 mt-2">
             <div className="flex justify-between">
               <span className="text-white font-semibold">Total</span>
-              <span className="text-[#FFD700] font-bold text-lg">${finalAmount.toFixed(2)}</span>
+              <span className="text-[#EF4444] font-bold text-lg">${finalAmount.toFixed(2)}</span>
             </div>
           </div>
         </div>

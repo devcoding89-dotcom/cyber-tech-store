@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Lock, Mail, Eye, EyeOff, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -41,10 +41,10 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#0a0000] flex items-center justify-center p-4">
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#FFD700]/5 rounded-full blur-[150px]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#9333EA]/5 rounded-full blur-[150px]" />
       </div>
 
@@ -55,7 +55,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
             <Shield className="w-8 h-8 text-black" />
           </div>
           <h1 className="text-3xl font-bold font-['Orbitron'] text-white mb-2">
-            Admin <span className="text-[#FFD700]">Portal</span>
+            Admin <span className="text-[#EF4444]">Portal</span>
           </h1>
           <p className="text-gray-400">Cyber Tech Store Management</p>
         </div>
@@ -73,7 +73,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="khaleed"
-                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#FFD700] focus:ring-[#FFD700]/20"
+                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#EF4444] focus:ring-[#EF4444]/20"
                   required
                 />
               </div>
@@ -89,7 +89,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
-                  className="pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#FFD700] focus:ring-[#FFD700]/20"
+                  className="pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:border-[#EF4444] focus:ring-[#EF4444]/20"
                   required
                 />
                 <button
@@ -127,7 +127,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
           <div className="mt-6 text-center">
             <Link 
               to="/" 
-              className="text-sm text-gray-500 hover:text-[#FFD700] transition-colors"
+              className="text-sm text-gray-500 hover:text-[#EF4444] transition-colors"
             >
               Back to Store
             </Link>

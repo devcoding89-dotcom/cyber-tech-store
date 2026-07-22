@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Plus, Search, Edit2, Trash2, Upload, ImageIcon, RotateCw, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -140,11 +140,13 @@ export default function ProductsManager() {
       alert('Please enter a product description');
       return;
     }
-    if (!formData.price || parseFloat(formData.price) <= 0) {
+    const priceVal = parseFloat(formData.price);
+    if (!formData.price || isNaN(priceVal) || priceVal <= 0) {
       alert('Please enter a valid price');
       return;
     }
-    if (!formData.stock || parseInt(formData.stock) < 0) {
+    const stockVal = parseInt(formData.stock, 10);
+    if (formData.stock === '' || isNaN(stockVal) || stockVal < 0) {
       alert('Please enter valid stock quantity');
       return;
     }
@@ -155,7 +157,11 @@ export default function ProductsManager() {
       console.log('📝 Starting product submission:', formData.name);
       
       // Use image URL or upload if it's base64, or use placeholder
-      let imageUrl = formData.image;
+      let imageUrl = formData.image?.trim() || '';
+
+      if (imageUrl && !imageUrl.startsWith('data:') && !imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+        imageUrl = 'https://' + imageUrl;
+      }
       
       if (!imageUrl) {
         // Use a default placeholder image
@@ -167,29 +173,31 @@ export default function ProductsManager() {
         const uploadedUrl = await uploadProductImage(imageUrl, formData.name);
         
         if (!uploadedUrl) {
-          // Allow continuing without image rather than failing
           console.warn('⚠️ Image upload failed, using placeholder');
           imageUrl = 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80';
         } else {
           imageUrl = uploadedUrl;
         }
       }
-      // If it's already a URL, use it as-is
+
+      const origPriceVal = formData.original_price ? parseFloat(formData.original_price) : null;
+      const ratingVal = formData.rating ? parseFloat(formData.rating) : 4.5;
+      const reviewsVal = formData.reviews ? parseInt(formData.reviews, 10) : 0;
 
       const productData = {
         name: formData.name.trim(),
         description: formData.description.trim(),
-        price: parseFloat(formData.price),
-        original_price: formData.original_price ? parseFloat(formData.original_price) : undefined,
+        price: priceVal,
+        original_price: (origPriceVal !== null && !isNaN(origPriceVal)) ? origPriceVal : undefined,
         category: formData.category,
         image: imageUrl,
-        stock: parseInt(formData.stock),
-        rating: parseFloat(formData.rating),
-        reviews: parseInt(formData.reviews),
-        features: formData.features.split(',').map(f => f.trim()).filter(f => f),
+        stock: stockVal,
+        rating: isNaN(ratingVal) ? 4.5 : ratingVal,
+        reviews: isNaN(reviewsVal) ? 0 : reviewsVal,
+        features: formData.features ? formData.features.split(',').map(f => f.trim()).filter(Boolean) : [],
         badge: formData.badge?.trim() || undefined,
-        is_new: formData.is_new,
-        is_bestseller: formData.is_bestseller,
+        is_new: Boolean(formData.is_new),
+        is_bestseller: Boolean(formData.is_bestseller),
       };
 
       console.log('📝 Submitting product to database:', productData.name);
@@ -199,25 +207,31 @@ export default function ProductsManager() {
         if (updated) {
           updateProductInStore(editingProduct.id, updated);
           console.log('✅ Product updated successfully');
-          alert('Product updated successfully! Check your store.');
+          alert('Product updated successfully!');
         } else {
           console.error('Failed to update product');
-          alert('Failed to update product. Please try again.');
+          alert('Failed to update product. Please check database permissions or try again.');
         }
       } else {
         const created = await createProduct(productData);
         if (created) {
           addProduct(created);
           console.log('✅ Product created successfully:', created);
-          alert('Product created successfully! It should appear on your store now.');
+          alert('Product created successfully!');
         } else {
           console.error('Failed to create product');
-          alert('Failed to create product. Please try again.');
+          alert('Failed to create product. Please check database permissions or try again.');
         }
+      }
+
+      // Re-sync with Supabase to make sure list is 100% fresh
+      const updatedList = await getAllProducts();
+      if (updatedList && updatedList.length > 0) {
+        setProducts(updatedList);
       }
     } catch (error) {
       console.error('Error submitting product:', error);
-      alert('An error occurred. Please check the console for details.');
+      alert('An error occurred while saving. Check console for details.');
     } finally {
       setIsSubmitting(false);
       setIsDialogOpen(false);
@@ -236,7 +250,7 @@ export default function ProductsManager() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search products..."
-              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:ring-2 focus:ring-[#FFD700]/50 transition-all"
+              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:ring-2 focus:ring-[#EF4444]/50 transition-all"
             />
           </div>
         </div>
@@ -260,7 +274,7 @@ export default function ProductsManager() {
                 Add Product
               </Button>
             </DialogTrigger>
-          <DialogContent className="max-w-2xl bg-[#0f0f14] border-white/10 text-white max-h-[90vh] overflow-y-auto z-[100]">
+          <DialogContent className="max-w-2xl bg-[#100000] border-white/10 text-white max-h-[90vh] overflow-y-auto z-[100]">
             <DialogHeader>
               <DialogTitle className="text-white font-['Orbitron'] text-xl">
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
@@ -284,7 +298,7 @@ export default function ProductsManager() {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value as Category })}
-                    className="w-full h-10 px-3 rounded-md bg-white/5 border border-white/10 text-white focus:ring-2 focus:ring-[#FFD700]/50"
+                    className="w-full h-10 px-3 rounded-md bg-white/5 border border-white/10 text-white focus:ring-2 focus:ring-[#EF4444]/50"
                   >
                     {categories.map(c => (
                       <option key={c.value} value={c.value}>{c.label}</option>
@@ -366,7 +380,7 @@ export default function ProductsManager() {
                       onClick={() => setImageInputMethod('url')}
                       className={`text-xs px-2 py-1 rounded ${
                         imageInputMethod === 'url'
-                          ? 'bg-[#FFD700] text-black'
+                          ? 'bg-[#EF4444] text-black'
                           : 'bg-white/10 text-gray-300 hover:bg-white/20'
                       }`}
                     >
@@ -377,7 +391,7 @@ export default function ProductsManager() {
                       onClick={() => setImageInputMethod('upload')}
                       className={`text-xs px-2 py-1 rounded ${
                         imageInputMethod === 'upload'
-                          ? 'bg-[#FFD700] text-black'
+                          ? 'bg-[#EF4444] text-black'
                           : 'bg-white/10 text-gray-300 hover:bg-white/20'
                       }`}
                     >
@@ -389,7 +403,7 @@ export default function ProductsManager() {
                 {imageInputMethod === 'url' ? (
                   <div className="space-y-2">
                     <Input
-                      type="url"
+                      type="text"
                       value={formData.image}
                       onChange={(e) => {
                         setFormData({ ...formData, image: e.target.value });
@@ -413,7 +427,7 @@ export default function ProductsManager() {
                     />
                     <label 
                       htmlFor="image-upload"
-                      className="flex items-center justify-center w-full h-40 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-[#FFD700]/50 hover:bg-white/5 transition-all bg-white/2"
+                      className="flex items-center justify-center w-full h-40 border-2 border-dashed border-white/20 rounded-lg cursor-pointer hover:border-red-500/50 hover:bg-white/5 transition-all bg-white/2"
                     >
                       <div className="text-center">
                         {imagePreview ? (
@@ -493,7 +507,7 @@ export default function ProductsManager() {
                     type="checkbox"
                     checked={formData.is_new}
                     onChange={(e) => setFormData({ ...formData, is_new: e.target.checked })}
-                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#FFD700] cursor-pointer"
+                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#EF4444] cursor-pointer"
                   />
                   <span className="text-sm text-gray-300">Mark as New Product</span>
                 </label>
@@ -502,7 +516,7 @@ export default function ProductsManager() {
                     type="checkbox"
                     checked={formData.is_bestseller}
                     onChange={(e) => setFormData({ ...formData, is_bestseller: e.target.checked })}
-                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#FFD700] cursor-pointer"
+                    className="w-4 h-4 rounded border-white/20 bg-white/5 accent-[#EF4444] cursor-pointer"
                   />
                   <span className="text-sm text-gray-300">Mark as Bestseller</span>
                 </label>
@@ -521,7 +535,7 @@ export default function ProductsManager() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 bg-[#FFD700] text-black hover:bg-[#FFD700]/90 font-semibold disabled:opacity-50"
+                  className="flex-1 bg-[#EF4444] text-black hover:bg-[#EF4444]/90 font-semibold disabled:opacity-50"
                 >
                   {isSubmitting ? '� Saving...' : (editingProduct ? 'Update Product' : 'Create Product')}
                 </Button>
@@ -579,7 +593,7 @@ export default function ProductsManager() {
                   </td>
                   <td className="px-6 py-4">
                     <div>
-                      <span className="text-[#FFD700] font-bold text-sm">₦{product.price.toLocaleString()}</span>
+                      <span className="text-[#EF4444] font-bold text-sm">₦{product.price.toLocaleString()}</span>
                       {product.original_price && (
                         <span className="text-gray-500 text-xs line-through ml-2 block">₦{product.original_price.toLocaleString()}</span>
                       )}
@@ -600,7 +614,7 @@ export default function ProductsManager() {
                         <Badge className="bg-blue-500/20 text-blue-400 text-xs">NEW</Badge>
                       )}
                       {product.is_bestseller && (
-                        <Badge className="bg-[#FFD700]/20 text-[#FFD700] text-xs">BEST</Badge>
+                        <Badge className="bg-red-500/20 text-[#EF4444] text-xs">BEST</Badge>
                       )}
                     </div>
                   </td>

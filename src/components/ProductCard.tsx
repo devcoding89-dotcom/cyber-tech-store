@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ShoppingCart, Star, Check, Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -33,7 +33,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
   return (
     <div
-      className="group relative bg-[#0f0f14] rounded-2xl overflow-hidden border border-white/5 card-hover"
+      className="group relative bg-[#100000] rounded-2xl overflow-hidden border border-white/5 card-hover"
       style={{
         animationDelay: `${index * 0.1}s`,
       }}
@@ -58,7 +58,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       )}
 
       {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-[#1a1a20] to-[#0f0f14]">
+      <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-[#1a1a20] to-[#100000]">
         <img
           src={product.image}
           alt={product.name}
@@ -112,14 +112,14 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       <div className="p-4">
         {/* Rating */}
         <div className="flex items-center gap-1 mb-2">
-          <Star className="w-3 h-3 fill-[#FFD700] text-[#FFD700]" />
+          <Star className="w-3 h-3 fill-[#EF4444] text-[#EF4444]" />
           <span className="text-xs text-gray-400">
             {product.rating} ({product.reviews.toLocaleString()})
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="text-white font-semibold text-sm mb-1 line-clamp-1 group-hover:text-[#FFD700] transition-colors">
+        <h3 className="text-white font-semibold text-sm mb-1 line-clamp-1 group-hover:text-[#EF4444] transition-colors">
           {product.name}
         </h3>
 
@@ -144,7 +144,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         <div className="flex items-end justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[#FFD700] font-bold text-lg">
+              <span className="text-[#EF4444] font-bold text-lg">
                 {formatPrice(product.price)}
               </span>
               {product.original_price && (
@@ -180,7 +180,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       {/* Hover Border Effect */}
       <div
         className={`absolute inset-0 rounded-2xl border-2 transition-all duration-300 pointer-events-none ${
-          isHovered ? 'border-[#FFD700]/50' : 'border-transparent'
+          isHovered ? 'border-red-500/50' : 'border-transparent'
         }`}
       />
     </div>

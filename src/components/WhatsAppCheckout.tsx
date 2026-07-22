@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ArrowLeft, MessageCircle, Send, User, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -179,7 +179,7 @@ export default function WhatsAppCheckout({ onClose, onSuccess }: WhatsAppCheckou
               <div className="border-t border-white/10 pt-2 mt-2">
                 <div className="flex justify-between">
                   <span className="text-white font-semibold">Total</span>
-                  <span className="text-[#FFD700] font-bold text-lg">{formatPrice(totalAmount)}</span>
+                  <span className="text-[#EF4444] font-bold text-lg">{formatPrice(totalAmount)}</span>
                 </div>
               </div>
             </div>

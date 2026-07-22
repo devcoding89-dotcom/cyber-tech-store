@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { Zap, Filter, ChevronDown, Check, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -75,7 +75,7 @@ export default function ChargersSection() {
   ];
 
   return (
-    <section ref={sectionRef} id="chargers" className="relative py-24 bg-[#0a0a0f] border-t border-white/5">
+    <section ref={sectionRef} id="chargers" className="relative py-24 bg-[#0a0000] border-t border-white/5">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[#9333EA]/5 rounded-full blur-[200px]" />
@@ -85,12 +85,12 @@ export default function ChargersSection() {
         {/* Header */}
         <div className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div>
-            <Badge className="mb-4 bg-[#FFD700]/10 text-[#FFD700] border-[#FFD700]/30">
+            <Badge className="mb-4 bg-red-500/10 text-[#EF4444] border-red-500/30">
               <Zap className="w-3 h-3 mr-1" />
               Power & Cables
             </Badge>
             <h2 className="text-4xl sm:text-5xl font-bold font-['Orbitron'] text-white mb-4">
-              FAST <span className="text-[#FFD700]">CHARGERS</span>
+              FAST <span className="text-[#EF4444]">CHARGERS</span>
             </h2>
             <p className="text-gray-400 max-w-xl">
               Power up your devices in no time with our ultra-fast wall chargers, GaN power adapters, and military-grade cables.
@@ -106,7 +106,7 @@ export default function ChargersSection() {
                 <ChevronDown className="w-4 h-4 ml-2" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-[#0f0f14] border-white/10">
+            <DropdownMenuContent className="bg-[#100000] border-white/10">
               {sortOptions.map((option) => (
                 <DropdownMenuItem
                   key={option.value}
@@ -114,7 +114,7 @@ export default function ChargersSection() {
                   className="text-gray-300 hover:text-white hover:bg-white/5 cursor-pointer"
                 >
                   {sortBy === option.value && (
-                    <Check className="w-4 h-4 mr-2 text-[#FFD700]" />
+                    <Check className="w-4 h-4 mr-2 text-[#EF4444]" />
                   )}
                   {option.label}
                 </DropdownMenuItem>
@@ -132,7 +132,7 @@ export default function ChargersSection() {
             { label: 'Warranty', value: '6 Months' },
           ].map((stat) => (
             <div key={stat.label} className="glass rounded-lg p-4 text-center">
-              <div className="text-2xl font-bold text-[#FFD700] font-['Orbitron']">{stat.value}</div>
+              <div className="text-2xl font-bold text-[#EF4444] font-['Orbitron']">{stat.value}</div>
               <div className="text-xs text-gray-500">{stat.label}</div>
             </div>
           ))}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { BatteryCharging, Filter, ChevronDown, Check, Star, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -75,7 +75,7 @@ export default function PowerbanksSection() {
   ];
 
   return (
-    <section ref={sectionRef} id="powerbanks" className="relative py-24 bg-[#0a0a0f] border-t border-white/5">
+    <section ref={sectionRef} id="powerbanks" className="relative py-24 bg-[#0a0000] border-t border-white/5">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-[#06B6D4]/5 rounded-full blur-[200px]" />
@@ -106,7 +106,7 @@ export default function PowerbanksSection() {
                 <ChevronDown className="w-4 h-4 ml-2" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-[#0f0f14] border-white/10">
+            <DropdownMenuContent className="bg-[#100000] border-white/10">
               {sortOptions.map((option) => (
                 <DropdownMenuItem
                   key={option.value}

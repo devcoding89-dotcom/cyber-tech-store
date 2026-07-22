@@ -1,4 +1,4 @@
-// Khalex Hub - Product Database
+﻿// Khalex Hub - Product Database
 // Real products with actual market data
 
 export type Category = 'phones' | 'chargers' | 'powerbanks' | 'accessories';

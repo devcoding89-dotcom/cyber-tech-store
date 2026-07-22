@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+﻿import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navigation from './sections/Navigation';
 import Hero from './sections/Hero';
@@ -40,7 +40,7 @@ function MainApp() {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0000] text-white overflow-x-hidden">
       <Navigation />
       <main>
         <Hero />

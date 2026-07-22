@@ -1,4 +1,4 @@
-import { Phone, Zap, Mail, MessageCircle, Shield, Instagram, Twitter, Youtube, Cable, Building2 } from 'lucide-react';
+﻿import { Phone, Zap, Mail, MessageCircle, Shield, Instagram, Twitter, Youtube, Cable, Building2 } from 'lucide-react';
 
 const footerLinks = {
   products: [
@@ -42,7 +42,7 @@ export default function Footer() {
     <footer className="relative bg-[#08080c] border-t border-white/5">
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[300px] bg-[#FFD700]/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[300px] bg-red-500/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[250px] bg-[#9333EA]/5 rounded-full blur-[150px]" />
       </div>
 
@@ -57,7 +57,7 @@ export default function Footer() {
                 <span className="relative text-black font-bold text-lg font-['Orbitron']">C</span>
               </div>
               <span className="text-xl font-bold font-['Orbitron'] text-white">
-                CYBER TECH<span className="text-[#FFD700]"> STORE</span>
+                CYBER TECH<span className="text-[#EF4444]"> STORE</span>
               </span>
             </a>
             <p className="text-gray-400 text-sm mb-6 max-w-sm">
@@ -68,7 +68,7 @@ export default function Footer() {
             {/* Contact Info */}
             <div className="space-y-3">
               <a href="mailto:support@cybertechstore.com" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
-                <Mail className="w-4 h-4 text-[#FFD700]" />
+                <Mail className="w-4 h-4 text-[#EF4444]" />
                 support@cybertechstore.com
               </a>
               <a href="#" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
@@ -95,7 +95,7 @@ export default function Footer() {
           {/* Products */}
           <div>
             <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-              <Phone className="w-4 h-4 text-[#FFD700]" />
+              <Phone className="w-4 h-4 text-[#EF4444]" />
               Products
             </h4>
             <ul className="space-y-3">

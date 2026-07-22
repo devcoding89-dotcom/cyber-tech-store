@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { Phone, Zap, BatteryCharging, Shield, Flame, Sparkles, TrendingUp, Cable } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -72,22 +72,22 @@ export default function Products() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-24 bg-[#0a0a0f]">
+    <section ref={sectionRef} className="relative py-24 bg-[#0a0000]">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FFD700]/5 rounded-full blur-[150px]" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#9333EA]/5 rounded-full blur-[150px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <Badge className="mb-4 bg-white/5 text-[#FFD700] border-[#FFD700]/30">
+          <Badge className="mb-4 bg-white/5 text-[#EF4444] border-red-500/30">
             <Sparkles className="w-3 h-3 mr-1" />
             Our Products
           </Badge>
           <h2 className="text-4xl sm:text-5xl font-bold font-['Orbitron'] text-white mb-4">
-            EXPLORE OUR <span className="text-[#FFD700]">COLLECTION</span>
+            EXPLORE OUR <span className="text-[#EF4444]">COLLECTION</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Browse our extensive collection of premium phones, high-speed chargers, high-capacity power banks, and accessories. 
@@ -121,7 +121,7 @@ export default function Products() {
                 <div className="flex items-center justify-between mb-8">
                   <div>
                     <h3 className="text-2xl font-bold text-white font-['Orbitron'] flex items-center gap-2">
-                      <category.icon className="w-6 h-6 text-[#FFD700]" />
+                      <category.icon className="w-6 h-6 text-[#EF4444]" />
                       {category.name}
                     </h3>
                     <p className="text-gray-500 text-sm mt-1">{category.description}</p>
@@ -165,7 +165,7 @@ export default function Products() {
               key={badge.title}
               className="glass rounded-xl p-6 text-center hover:bg-white/10 transition-colors group"
             >
-              <badge.icon className="w-8 h-8 text-[#FFD700] mx-auto mb-3 group-hover:scale-110 transition-transform" />
+              <badge.icon className="w-8 h-8 text-[#EF4444] mx-auto mb-3 group-hover:scale-110 transition-transform" />
               <h4 className="text-white font-semibold mb-1">{badge.title}</h4>
               <p className="text-gray-500 text-sm">{badge.desc}</p>
             </div>

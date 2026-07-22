@@ -1,13 +1,21 @@
-import { createClient } from '@supabase/supabase-js';
+﻿import { createClient } from '@supabase/supabase-js';
 import type { Product, Order, TrackingUpdate } from '@/types/database';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY;
 
 const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 
+// Public client (anon key) - for reads and customer-facing operations
 export const supabase = isSupabaseConfigured
   ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+// Admin client (service role key) - bypasses RLS for all admin writes
+const adminKey = SUPABASE_SERVICE_KEY || SUPABASE_ANON_KEY;
+export const adminSupabase = (SUPABASE_URL && adminKey)
+  ? createClient(SUPABASE_URL, adminKey, { auth: { persistSession: false } })
   : null;
 
 if (typeof window !== 'undefined') {
@@ -15,6 +23,7 @@ if (typeof window !== 'undefined') {
   console.log('✅ Configured:', isSupabaseConfigured);
   console.log('📍 URL:', SUPABASE_URL || 'missing');
   console.log('🔑 Key length:', SUPABASE_ANON_KEY?.length || 0, 'chars');
+  console.log('🔐 Admin client:', adminSupabase ? 'ready' : 'not ready');
   if (!isSupabaseConfigured) {
     console.warn('⚠️ Supabase is not configured. This app requires Supabase.');
   }
@@ -102,41 +111,46 @@ export async function getProductById(id: string): Promise<Product | null> {
 }
 
 export async function createProduct(product: Omit<Product, 'id' | 'created_at'>): Promise<Product | null> {
-  if (!isSupabaseConfigured || !supabase) {
+  const client = adminSupabase || supabase;
+  if (!client) {
     console.error('❌ Supabase is not configured. createProduct failed.');
     return null;
   }
 
   try {
     console.log('📦 Preparing to insert product:', product.name);
-    console.log('🔍 Data types:', {
-      name: typeof product.name,
-      price: typeof product.price,
-      stock: typeof product.stock,
-      features: Array.isArray(product.features) ? 'array' : typeof product.features,
-      imageLength: product.image.length,
+
+    // Sanitize payload - remove any potential id/created_at and convert undefined to null
+    const payload: Record<string, any> = { ...product };
+    delete payload.id;
+    delete payload.created_at;
+
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] === undefined) {
+        payload[key] = null;
+      }
     });
 
-    // Don't include id - let Supabase generate it
-    // Don't include created_at - let Supabase generate it with DEFAULT NOW()
-    const { data, error } = await supabase
+    let { data, error } = await client
       .from('products')
-      .insert([product])
+      .insert([payload])
       .select()
       .single();
 
+    // Fallback to standard supabase client if adminSupabase failed
+    if (error && client === adminSupabase && supabase) {
+      console.warn('⚠️ adminSupabase insert failed, trying standard supabase client...');
+      const fallbackRes = await supabase
+        .from('products')
+        .insert([payload])
+        .select()
+        .single();
+      data = fallbackRes.data;
+      error = fallbackRes.error;
+    }
+
     if (error) {
-      console.error('❌ Error creating product in Supabase');
-      console.error('Error message:', error.message);
-      console.error('Error code:', error.code);
-      console.error('Error details:', error);
-      console.error('Product data sent:', {
-        name: product.name,
-        category: product.category,
-        price: product.price,
-        stock: product.stock,
-        imageSize: `${(product.image.length / 1024 / 1024).toFixed(2)} MB`,
-      });
+      console.error('❌ Error creating product in Supabase:', error.message || error);
       return null;
     }
 
@@ -144,30 +158,50 @@ export async function createProduct(product: Omit<Product, 'id' | 'created_at'>)
     return data;
   } catch (err) {
     console.error('❌ Exception creating product in Supabase:', err);
-    if (err instanceof Error) {
-      console.error('Exception message:', err.message);
-      console.error('Exception stack:', err.stack);
-    }
     return null;
   }
 }
 
 export async function updateProduct(id: string, updates: Partial<Product>): Promise<Product | null> {
-  if (!isSupabaseConfigured || !supabase) {
+  const client = adminSupabase || supabase;
+  if (!client) {
     console.error('❌ Supabase is not configured. updateProduct failed.');
     return null;
   }
 
   try {
-    const { data, error } = await supabase
+    const payload: Record<string, any> = { ...updates };
+    delete payload.id;
+    delete payload.created_at;
+
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] === undefined) {
+        payload[key] = null;
+      }
+    });
+
+    let { data, error } = await client
       .from('products')
-      .update(updates)
+      .update(payload)
       .eq('id', id)
       .select()
       .single();
 
+    // Fallback to standard supabase client if adminSupabase failed
+    if (error && client === adminSupabase && supabase) {
+      console.warn('⚠️ adminSupabase update failed, trying standard supabase client...');
+      const fallbackRes = await supabase
+        .from('products')
+        .update(payload)
+        .eq('id', id)
+        .select()
+        .single();
+      data = fallbackRes.data;
+      error = fallbackRes.error;
+    }
+
     if (error) {
-      console.error('❌ Error updating product in Supabase:', error);
+      console.error('❌ Error updating product in Supabase:', error.message || error);
       return null;
     }
 
@@ -179,13 +213,14 @@ export async function updateProduct(id: string, updates: Partial<Product>): Prom
 }
 
 export async function deleteProduct(id: string): Promise<boolean> {
-  if (!isSupabaseConfigured || !supabase) {
+  const client = adminSupabase || supabase;
+  if (!client) {
     console.error('❌ Supabase is not configured. deleteProduct failed.');
     return false;
   }
 
   try {
-    const { error } = await supabase
+    const { error } = await client
       .from('products')
       .delete()
       .eq('id', id);

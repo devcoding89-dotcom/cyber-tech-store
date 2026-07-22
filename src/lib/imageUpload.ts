@@ -1,8 +1,20 @@
-import { supabase } from './supabase';
+﻿import { createClient } from '@supabase/supabase-js';
 
 const BUCKET_NAME = 'product-images';
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB max
-const QUALITY = 0.7; // 70% quality for compression
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB max
+const QUALITY = 0.8; // 80% quality
+
+// Use service role key for admin uploads (bypasses RLS)
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY;
+const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Create a dedicated upload client with service role key (bypasses storage RLS)
+const uploadClient = (SUPABASE_URL && (SERVICE_KEY || ANON_KEY))
+  ? createClient(SUPABASE_URL, SERVICE_KEY || ANON_KEY, {
+      auth: { persistSession: false }
+    })
+  : null;
 
 /**
  * Compress an image and return as blob
@@ -15,8 +27,7 @@ async function compressImage(base64String: string): Promise<Blob> {
       let width = img.width;
       let height = img.height;
 
-      // Calculate new dimensions if image is too large
-      const maxDim = 2000;
+      const maxDim = 1200;
       if (width > height) {
         if (width > maxDim) {
           height = Math.round((height * maxDim) / width);
@@ -61,7 +72,7 @@ async function compressImage(base64String: string): Promise<Blob> {
  * Upload image to Supabase Storage and return public URL
  */
 export async function uploadProductImage(base64String: string, productName: string): Promise<string | null> {
-  if (!supabase) {
+  if (!uploadClient) {
     console.error('❌ Supabase not configured');
     return null;
   }
@@ -72,49 +83,53 @@ export async function uploadProductImage(base64String: string, productName: stri
 
     if (compressedBlob.size > MAX_FILE_SIZE) {
       throw new Error(
-        `Image too large: ${(compressedBlob.size / 1024 / 1024).toFixed(2)}MB (max 2MB)`
+        `Image too large: ${(compressedBlob.size / 1024 / 1024).toFixed(2)}MB (max 5MB)`
       );
     }
 
-    console.log(`✅ Compressed image: ${(compressedBlob.size / 1024).toFixed(2)}KB`);
+    console.log(`✅ Compressed: ${(compressedBlob.size / 1024).toFixed(0)}KB`);
 
     // Generate unique filename
     const timestamp = Date.now();
     const sanitizedName = productName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
     const filename = `${sanitizedName}-${timestamp}.jpg`;
 
-    console.log(`📤 Uploading to Supabase Storage: ${filename}`);
+    console.log(`📤 Uploading to storage: ${filename}`);
 
-    // Upload to Supabase Storage
-    const { data, error: uploadError } = await supabase.storage
+    // Try to ensure bucket exists first
+    await uploadClient.storage.createBucket(BUCKET_NAME, { public: true }).catch(() => {
+      // Bucket already exists — that's fine
+    });
+
+    const { data, error: uploadError } = await uploadClient.storage
       .from(BUCKET_NAME)
       .upload(filename, compressedBlob, {
         cacheControl: '3600',
-        upsert: false,
+        upsert: true,
         contentType: 'image/jpeg',
       });
 
     if (uploadError) {
-      console.error('❌ Upload error:', uploadError);
+      console.error('❌ Upload error:', uploadError.message);
       throw uploadError;
     }
 
+    console.log('✅ Uploaded:', data?.path);
+
     // Get public URL
-    const { data: publicData } = supabase.storage
+    const { data: publicData } = uploadClient.storage
       .from(BUCKET_NAME)
       .getPublicUrl(filename);
 
     if (!publicData?.publicUrl) {
-      throw new Error('Failed to get public URL for image');
+      throw new Error('Failed to get public URL');
     }
 
-    console.log(`✅ Image uploaded successfully: ${publicData.publicUrl}`);
+    console.log(`✅ Image URL: ${publicData.publicUrl}`);
     return publicData.publicUrl;
+
   } catch (error) {
-    console.error('❌ Error uploading image:', error);
-    if (error instanceof Error) {
-      console.error('Error message:', error.message);
-    }
+    console.error('❌ Image upload failed:', error instanceof Error ? error.message : error);
     return null;
   }
 }
@@ -123,20 +138,14 @@ export async function uploadProductImage(base64String: string, productName: stri
  * Delete an image from storage
  */
 export async function deleteProductImage(imageUrl: string): Promise<boolean> {
-  if (!supabase || !imageUrl) {
-    return false;
-  }
+  if (!uploadClient || !imageUrl) return false;
 
   try {
-    // Extract filename from URL
     const url = new URL(imageUrl);
     const filename = url.pathname.split('/').pop();
+    if (!filename) return false;
 
-    if (!filename) {
-      return false;
-    }
-
-    const { error } = await supabase.storage
+    const { error } = await uploadClient.storage
       .from(BUCKET_NAME)
       .remove([filename]);
 

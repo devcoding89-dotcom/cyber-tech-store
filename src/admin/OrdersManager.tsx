@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Search, Eye, Package, Truck, CheckCircle, XCircle, Clock, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -80,7 +80,7 @@ export default function OrdersManager() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search orders..."
-              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:ring-2 focus:ring-[#FFD700]/50 transition-all"
+              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus:ring-2 focus:ring-[#EF4444]/50 transition-all"
             />
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function OrdersManager() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-[#FFD700] font-bold text-sm">₦{(order.total_amount || 0).toLocaleString()}</span>
+                      <span className="text-[#EF4444] font-bold text-sm">₦{(order.total_amount || 0).toLocaleString()}</span>
                     </td>
                     <td className="px-6 py-4">
                       <Badge className={`${statusColors[order.status]} text-xs capitalize font-semibold px-3 py-1`}>
@@ -191,7 +191,7 @@ export default function OrdersManager() {
 
       {/* Order Details Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-4xl bg-[#0f0f14] border-white/10 text-white max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl bg-[#100000] border-white/10 text-white max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="font-['Orbitron'] text-xl">Order Details</DialogTitle>
           </DialogHeader>
@@ -209,7 +209,7 @@ export default function OrdersManager() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">Tracking ID</span>
-                      <span className="text-[#FFD700] font-mono font-semibold">{selectedOrder.tracking_id}</span>
+                      <span className="text-[#EF4444] font-mono font-semibold">{selectedOrder.tracking_id}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">Date</span>
@@ -243,7 +243,7 @@ export default function OrdersManager() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">Total Amount</span>
-                      <span className="text-[#FFD700] font-bold text-lg">₦{(selectedOrder.total_amount || 0).toLocaleString()}</span>
+                      <span className="text-[#EF4444] font-bold text-lg">₦{(selectedOrder.total_amount || 0).toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -261,7 +261,7 @@ export default function OrdersManager() {
                         <p className="text-gray-500 text-xs">Quantity: {item.quantity}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-[#FFD700] font-bold">₦{(item.price * item.quantity).toLocaleString()}</p>
+                        <p className="text-[#EF4444] font-bold">₦{(item.price * item.quantity).toLocaleString()}</p>
                         <p className="text-gray-500 text-xs">₦{item.price.toLocaleString()} each</p>
                       </div>
                     </div>
@@ -299,13 +299,13 @@ export default function OrdersManager() {
                       value={trackingUpdate}
                       onChange={(e) => setTrackingUpdate(e.target.value)}
                       placeholder="e.g., Order shipped via DHL"
-                      className="bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-[#FFD700]/50"
+                      className="bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-[#EF4444]/50"
                     />
                     <Input
                       value={trackingLocation}
                       onChange={(e) => setTrackingLocation(e.target.value)}
                       placeholder="Location (optional)"
-                      className="bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-[#FFD700]/50"
+                      className="bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-[#EF4444]/50"
                     />
                   </div>
                   <Button

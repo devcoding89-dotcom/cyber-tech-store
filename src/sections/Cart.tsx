@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ShoppingCart, Plus, Minus, Trash2, ArrowRight, Package, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -38,10 +38,10 @@ export default function Cart() {
   return (
     <>
       <Sheet open={isOpen} onOpenChange={setCartOpen}>
-        <SheetContent className="w-full sm:max-w-lg bg-[#0a0a0f] border-l border-white/10 flex flex-col">
+        <SheetContent className="w-full sm:max-w-lg bg-[#0a0000] border-l border-white/10 flex flex-col">
           <SheetHeader className="space-y-2.5 pb-4">
             <SheetTitle className="flex items-center gap-2 text-white font-['Orbitron']">
-              <ShoppingCart className="w-5 h-5 text-[#FFD700]" />
+              <ShoppingCart className="w-5 h-5 text-[#EF4444]" />
               Your Cart
               {items.length > 0 && (
                 <span className="text-sm text-gray-400 font-normal">
@@ -92,7 +92,7 @@ export default function Cart() {
                       <h4 className="text-white font-medium text-sm truncate">{item.name}</h4>
                       <p className="text-gray-500 text-xs mb-2 line-clamp-1">{item.description}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-[#FFD700] font-semibold">
+                        <span className="text-[#EF4444] font-semibold">
                           ₦{(item.price * item.quantity).toLocaleString()}
                         </span>
                         
@@ -141,7 +141,7 @@ export default function Cart() {
                 <Separator className="bg-white/10" />
                 <div className="flex justify-between text-lg font-semibold">
                   <span className="text-white">Total</span>
-                  <span className="text-[#FFD700] font-['Orbitron']">
+                  <span className="text-[#EF4444] font-['Orbitron']">
                     {formatPrice(totalPrice)}
                   </span>
                 </div>

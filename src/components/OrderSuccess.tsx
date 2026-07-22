@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { Check, MessageCircle, Package, Truck, Copy, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -49,8 +49,8 @@ export default function OrderSuccess({ orderId, trackingId, onClose }: OrderSucc
         <div className="bg-white/5 rounded-xl p-6 mb-8 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#FFD700]/20 flex items-center justify-center">
-                <Package className="w-5 h-5 text-[#FFD700]" />
+              <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center">
+                <Package className="w-5 h-5 text-[#EF4444]" />
               </div>
               <div className="text-left">
                 <p className="text-gray-500 text-xs">Order ID</p>
