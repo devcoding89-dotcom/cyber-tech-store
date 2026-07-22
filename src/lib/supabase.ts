@@ -1,9 +1,9 @@
-﻿import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import type { Product, Order, TrackingUpdate } from '@/types/database';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY;
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://luxoncvjroafxvsylhjh.supabase.co';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTQxODIsImV4cCI6MjA5MTY3MDE4Mn0.6RcO8OJnsSwDxvIkEhfpZ-72rh7Du7kVheq0he3PQ8c';
+const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjA5NDE4MiwiZXhwIjoyMDkxNjcwMTgyfQ.6O9qOhu97rLs6Bc4DPI4pC00mTYv_p-CZFkzKNlIRms';
 
 const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 
