@@ -1,22 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Product, Order, TrackingUpdate } from '@/types/database';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://luxoncvjroafxvsylhjh.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTQxODIsImV4cCI6MjA5MTY3MDE4Mn0.6RcO8OJnsSwDxvIkEhfpZ-72rh7Du7kVheq0he3PQ8c';
-const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjA5NDE4MiwiZXhwIjoyMDkxNjcwMTgyfQ.6O9qOhu97rLs6Bc4DPI4pC00mTYv_p-CZFkzKNlIRms';
+const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || 'https://luxoncvjroafxvsylhjh.supabase.co').trim().replace(/[\r\n]/g, '');
+const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTQxODIsImV4cCI6MjA5MTY3MDE4Mn0.6RcO8OJnsSwDxvIkEhfpZ-72rh7Du7kVheq0he3PQ8c').trim().replace(/[\r\n]/g, '');
+const SUPABASE_SERVICE_KEY = (import.meta.env.VITE_SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eG9uY3Zqcm9hZnh2c3lsaGpoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjA5NDE4MiwiZXhwIjoyMDkxNjcwMTgyfQ.6O9qOhu97rLs6Bc4DPI4pC00mTYv_p-CZFkzKNlIRms').trim().replace(/[\r\n]/g, '');
 
 const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 
-// Public client (anon key) - for reads and customer-facing operations
+// Single primary client for all operations
 export const supabase = isSupabaseConfigured
   ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
 
-// Admin client (service role key) - bypasses RLS for all admin writes
+// Admin client fallback
 const adminKey = SUPABASE_SERVICE_KEY || SUPABASE_ANON_KEY;
-export const adminSupabase = (SUPABASE_URL && adminKey)
-  ? createClient(SUPABASE_URL, adminKey, { auth: { persistSession: false } })
-  : null;
+export const adminSupabase = supabase;
 
 if (typeof window !== 'undefined') {
   console.log('🔧 Supabase Configuration:');
