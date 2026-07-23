@@ -27,12 +27,12 @@
     --ring: 217 91% 60%;
     --radius: 0.75rem;
 
-    /* Custom colors - Black & Blue Theme */
-    --neon-gold: 217 91% 60%;
-    --neon-red: 217 91% 60%;
-    --neon-blue: 217 91% 60%;
-    --neon-purple: 225 85% 55%;
-    --neon-cyan: 199 89% 48%;
+    /* Custom colors - True Cyber & Premium Gold Theme */
+    --neon-gold: 45 100% 60%;     /* Vibrant Gold */
+    --neon-red: 0 95% 60%;        /* Electric Red */
+    --neon-blue: 217 91% 60%;     /* Cyber Blue */
+    --neon-purple: 270 95% 60%;   /* Deep Purple */
+    --neon-cyan: 180 100% 50%;    /* Tech Cyan */
     --dark-bg: 220 20% 4%;
     --darker-bg: 220 20% 2%;
   }
@@ -61,81 +61,74 @@
 @layer utilities {
   /* Neon glow effects */
   .glow-gold {
-    box-shadow: 0 0 20px hsl(217 91% 60% / 0.5),
-                0 0 40px hsl(217 91% 60% / 0.3),
-                0 0 60px hsl(217 91% 60% / 0.1);
+    box-shadow: 0 0 20px hsl(45 100% 60% / 0.5),
+                0 0 40px hsl(45 100% 60% / 0.2);
   }
 
   .glow-red {
-    box-shadow: 0 0 20px hsl(217 91% 60% / 0.6),
-                0 0 40px hsl(217 91% 60% / 0.4),
-                0 0 60px hsl(217 91% 60% / 0.2);
+    box-shadow: 0 0 20px hsl(0 95% 60% / 0.5),
+                0 0 40px hsl(0 95% 60% / 0.2);
   }
 
   .glow-blue {
-    box-shadow: 0 0 20px hsl(217 91% 60% / 0.6),
-                0 0 40px hsl(217 91% 60% / 0.4),
-                0 0 60px hsl(217 91% 60% / 0.2);
+    box-shadow: 0 0 20px hsl(217 91% 60% / 0.5),
+                0 0 40px hsl(217 91% 60% / 0.2);
   }
 
   .glow-purple {
-    box-shadow: 0 0 20px hsl(225 85% 55% / 0.5),
-                0 0 40px hsl(225 85% 55% / 0.3),
-                0 0 60px hsl(225 85% 55% / 0.1);
+    box-shadow: 0 0 20px hsl(270 95% 60% / 0.5),
+                0 0 40px hsl(270 95% 60% / 0.2);
   }
 
   .glow-cyan {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4),
-                0 0 40px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.5),
+                0 0 40px hsl(180 100% 50% / 0.2);
   }
 
   .text-glow-gold {
-    text-shadow: 0 0 10px hsl(217 91% 60% / 0.8),
-                 0 0 20px hsl(217 91% 60% / 0.5),
-                 0 0 30px hsl(217 91% 60% / 0.3);
+    text-shadow: 0 0 10px hsl(45 100% 60% / 0.8),
+                 0 0 20px hsl(45 100% 60% / 0.4);
   }
 
   .text-glow-red {
-    text-shadow: 0 0 10px hsl(217 91% 60% / 0.9),
-                 0 0 20px hsl(217 91% 60% / 0.6),
-                 0 0 30px hsl(217 91% 60% / 0.3);
+    text-shadow: 0 0 10px hsl(0 95% 60% / 0.8),
+                 0 0 20px hsl(0 95% 60% / 0.4);
   }
 
   .text-glow-blue {
-    text-shadow: 0 0 10px hsl(217 91% 60% / 0.9),
-                 0 0 20px hsl(217 91% 60% / 0.6),
-                 0 0 30px hsl(217 91% 60% / 0.3);
+    text-shadow: 0 0 10px hsl(217 91% 60% / 0.8),
+                 0 0 20px hsl(217 91% 60% / 0.4);
   }
 
   .text-glow-purple {
-    text-shadow: 0 0 10px hsl(225 85% 55% / 0.8),
-                 0 0 20px hsl(225 85% 55% / 0.5);
+    text-shadow: 0 0 10px hsl(270 95% 60% / 0.8),
+                 0 0 20px hsl(270 95% 60% / 0.4);
   }
 
   /* Gradient backgrounds */
   .gradient-gold {
-    background: linear-gradient(135deg, #3B82F6, #2563EB);
-    color: #ffffff;
+    background: linear-gradient(135deg, #FBBF24, #D97706);
+    color: #000000;
   }
 
   .gradient-red {
-    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    background: linear-gradient(135deg, #EF4444, #B91C1C);
     color: #ffffff;
   }
 
   .gradient-blue {
-    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
     color: #ffffff;
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
     color: #ffffff;
     font-weight: 600;
   }
 
   .gradient-purple {
-    background: linear-gradient(135deg, #2563EB, #1E40AF);
+    background: linear-gradient(135deg, #8B5CF6, #6D28D9);
   }
 
   .gradient-dark {
