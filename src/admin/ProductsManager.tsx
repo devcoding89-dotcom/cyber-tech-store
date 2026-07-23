@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Plus, Search, Edit2, Trash2, Upload, ImageIcon, RotateCw, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -35,6 +35,7 @@ export default function ProductsManager() {
     original_price: '',
     category: 'phones' as Category,
     image: '',
+    additionalImages: [] as string[],
     stock: '',
     rating: '4.5',
     reviews: '0',
@@ -57,6 +58,7 @@ export default function ProductsManager() {
       original_price: '',
       category: 'phones',
       image: '',
+      additionalImages: [],
       stock: '',
       rating: '4.5',
       reviews: '0',
@@ -83,6 +85,39 @@ export default function ProductsManager() {
     }
   };
 
+  const handleAddAdditionalImageUrl = (url: string) => {
+    if (url.trim()) {
+      setFormData(prev => ({
+        ...prev,
+        additionalImages: [...prev.additionalImages, url.trim()]
+      }));
+    }
+  };
+
+  const handleRemoveAdditionalImage = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      additionalImages: prev.additionalImages.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleAdditionalImagesUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          setFormData(prev => ({
+            ...prev,
+            additionalImages: [...prev.additionalImages, base64String]
+          }));
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
   const handleEdit = (product: Product) => {
     setEditingProduct(product);
     setFormData({
@@ -92,6 +127,7 @@ export default function ProductsManager() {
       original_price: product.original_price?.toString() || '',
       category: product.category,
       image: product.image,
+      additionalImages: product.images || [],
       stock: product.stock.toString(),
       rating: product.rating.toString(),
       reviews: product.reviews.toString(),
@@ -180,6 +216,27 @@ export default function ProductsManager() {
         }
       }
 
+      // Process additional images
+      const finalAdditionalImages: string[] = [];
+      if (formData.additionalImages && formData.additionalImages.length > 0) {
+        for (let i = 0; i < formData.additionalImages.length; i++) {
+          const img = formData.additionalImages[i];
+          if (img.startsWith('data:')) {
+            console.log(`🖼️ Uploading additional product image ${i + 1}...`);
+            const uploadedUrl = await uploadProductImage(img, `${formData.name}-additional-${i}`);
+            if (uploadedUrl) {
+              finalAdditionalImages.push(uploadedUrl);
+            }
+          } else if (img.trim()) {
+            let url = img.trim();
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+              url = 'https://' + url;
+            }
+            finalAdditionalImages.push(url);
+          }
+        }
+      }
+
       const origPriceVal = formData.original_price ? parseFloat(formData.original_price) : null;
       const ratingVal = formData.rating ? parseFloat(formData.rating) : 4.5;
       const reviewsVal = formData.reviews ? parseInt(formData.reviews, 10) : 0;
@@ -191,6 +248,7 @@ export default function ProductsManager() {
         original_price: (origPriceVal !== null && !isNaN(origPriceVal)) ? origPriceVal : undefined,
         category: formData.category,
         image: imageUrl,
+        images: finalAdditionalImages,
         stock: stockVal,
         rating: isNaN(ratingVal) ? 4.5 : ratingVal,
         reviews: isNaN(reviewsVal) ? 0 : reviewsVal,
@@ -459,6 +517,76 @@ export default function ProductsManager() {
                   >
                     Clear image
                   </button>
+                )}
+              </div>
+
+              {/* Additional Pictures Section */}
+              <div className="space-y-3 p-4 border border-white/5 rounded-xl bg-white/2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-white font-semibold">Additional Pictures</Label>
+                  <label 
+                    htmlFor="additional-images-upload"
+                    className="text-xs px-2.5 py-1.5 rounded bg-white/10 text-gray-300 hover:bg-white/20 cursor-pointer flex items-center gap-1 transition-all"
+                  >
+                    <Upload className="w-3 h-3" /> Upload Files
+                  </label>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleAdditionalImagesUpload}
+                    className="hidden"
+                    id="additional-images-upload"
+                  />
+                </div>
+
+                <div className="flex gap-2">
+                  <Input
+                    type="text"
+                    placeholder="Or paste image URL here..."
+                    className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 text-xs flex-1 animate-none"
+                    id="new-additional-image-url"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const input = e.currentTarget as HTMLInputElement;
+                        handleAddAdditionalImageUrl(input.value);
+                        input.value = '';
+                      }
+                    }}
+                  />
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      const input = document.getElementById('new-additional-image-url') as HTMLInputElement;
+                      if (input) {
+                        handleAddAdditionalImageUrl(input.value);
+                        input.value = '';
+                      }
+                    }}
+                    className="bg-white/10 text-white text-xs hover:bg-white/20 h-9 px-3"
+                  >
+                    Add
+                  </Button>
+                </div>
+
+                {formData.additionalImages && formData.additionalImages.length > 0 ? (
+                  <div className="grid grid-cols-4 gap-2 mt-2">
+                    {formData.additionalImages.map((img, idx) => (
+                      <div key={idx} className="relative aspect-square rounded-lg overflow-hidden border border-white/10 bg-black group">
+                        <img src={img} alt={`Preview ${idx}`} className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveAdditionalImage(idx)}
+                          className="absolute inset-0 bg-red-600/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <Trash2 className="w-4 h-4 text-white" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-gray-500 italic">No additional images added yet</p>
                 )}
               </div>
 

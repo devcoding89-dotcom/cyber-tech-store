@@ -22,6 +22,7 @@ CREATE TABLE products (
   original_price  DECIMAL(10,2),
   category        TEXT NOT NULL CHECK (category IN ('phones', 'chargers', 'powerbanks', 'accessories')),
   image           TEXT NOT NULL,
+  images          TEXT[] DEFAULT '{}',
   stock           INTEGER NOT NULL DEFAULT 0,
   rating          DECIMAL(2,1) DEFAULT 4.5,
   reviews         INTEGER DEFAULT 0,

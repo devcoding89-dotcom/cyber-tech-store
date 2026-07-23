@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Zap, Filter, ChevronDown, Check, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -31,7 +31,15 @@ export default function ChargersSection() {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    // Robust fallback to ensure content is visible on mobile
+    const fallbackTimeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 400);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallbackTimeout);
+    };
   }, []);
 
   useEffect(() => {

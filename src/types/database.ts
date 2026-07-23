@@ -1,4 +1,4 @@
-﻿export type Category = 'phones' | 'chargers' | 'powerbanks' | 'accessories';
+export type Category = 'phones' | 'chargers' | 'powerbanks' | 'accessories';
 
 export interface Product {
   id: string;
@@ -8,6 +8,7 @@ export interface Product {
   original_price?: number;
   category: Category;
   image: string;
+  images?: string[];
   stock: number;
   rating: number;
   reviews: number;
