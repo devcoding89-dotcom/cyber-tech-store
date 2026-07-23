@@ -1,4 +1,4 @@
-﻿import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navigation from './sections/Navigation';
 import Hero from './sections/Hero';
@@ -12,6 +12,8 @@ import Footer from './sections/Footer';
 import AdminApp from './admin/AdminApp';
 import { getAllProducts } from './lib/supabase';
 import { useAdminStore } from './store/adminStore';
+
+import DownloadGateModal from './components/DownloadGateModal';
 
 function MainApp() {
   const { setProducts } = useAdminStore();
@@ -41,6 +43,7 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-[#030712] text-white overflow-x-hidden">
+      <DownloadGateModal />
       <Navigation />
       <main>
         <Hero />

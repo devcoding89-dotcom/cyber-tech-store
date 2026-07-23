@@ -1,5 +1,5 @@
-﻿import { useState, useEffect } from 'react';
-import { ShoppingCart, Menu, Phone, Zap, BatteryCharging, Home, MapPin, Shield, Cable } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ShoppingCart, Menu, Phone, Zap, BatteryCharging, Home, MapPin, Shield, Cable, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '@/store/cartStore';
 import { Button } from '@/components/ui/button';
@@ -35,6 +35,22 @@ export default function Navigation() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
+  };
+
+  const handleDownloadApp = () => {
+    const apkFileName = 'CyberTechStore-MobileApp.apk';
+    const sampleContent = 'Cyber Tech Store Mobile App Package';
+    const blob = new Blob([sampleContent], { type: 'application/vnd.android.package-archive' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = apkFileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    localStorage.setItem('cybertech_app_downloaded', 'true');
   };
 
   return (
@@ -77,6 +93,15 @@ export default function Navigation() {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
+            {/* Download App Button */}
+            <Button
+              onClick={handleDownloadApp}
+              className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold gradient-gold text-black hover:opacity-90 rounded-lg shadow-md transition-all"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download App
+            </Button>
+
             {/* Admin Link */}
             <Link
               to="/admin"
@@ -120,6 +145,16 @@ export default function Navigation() {
                       {link.name}
                     </button>
                   ))}
+                  <button
+                    onClick={() => {
+                      handleDownloadApp();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="px-4 py-3 text-lg font-medium text-black gradient-gold rounded-lg transition-all duration-300 flex items-center gap-3 font-semibold"
+                  >
+                    <Download className="w-5 h-5 text-black" />
+                    Download Mobile App
+                  </button>
                   <Link
                     to="/admin"
                     className="px-4 py-3 text-lg font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-300 flex items-center gap-3"
