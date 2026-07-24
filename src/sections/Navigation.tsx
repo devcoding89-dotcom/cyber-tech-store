@@ -14,6 +14,16 @@ const navLinks = [
   { name: 'Track Order', href: '#tracking', icon: MapPin },
 ];
 
+const STORAGE_KEY = 'cybertech_app_downloaded';
+
+const isStandaloneMode = () => {
+  const standalone = (window.navigator as Navigator & { standalone?: boolean }).standalone;
+  const displayMode = window.matchMedia('(display-mode: standalone)').matches;
+  return Boolean(standalone || displayMode);
+};
+
+const isMobileDevice = () => /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,23 +48,26 @@ export default function Navigation() {
   };
 
   const handleDownloadApp = async () => {
-    // Try native PWA install prompt (Android Chrome)
+    if (!isMobileDevice() || isStandaloneMode()) {
+      localStorage.setItem(STORAGE_KEY, 'true');
+      return;
+    }
+
     const deferredEvent = (window as any).__pwaInstallPrompt;
     if (deferredEvent) {
       await deferredEvent.prompt();
       const { outcome } = await deferredEvent.userChoice;
       if (outcome === 'accepted') {
-        localStorage.setItem('cybertech_app_downloaded', 'true');
+        localStorage.setItem(STORAGE_KEY, 'true');
       }
     } else {
-      // Fallback: show instructions
       const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
       if (isIOS) {
         alert('To install on iPhone:\n\n1. Tap the Share button (📤) at the bottom\n2. Tap "Add to Home Screen"\n3. Tap "Add"\n\nThe CyberTech icon will appear on your home screen!');
       } else {
         alert('To install on Android:\n\n1. Tap the 3-dot menu (⋮) in Chrome\n2. Tap "Add to Home screen"\n3. Tap "Add"\n\nThe CyberTech app icon will appear on your home screen!');
       }
-      localStorage.setItem('cybertech_app_downloaded', 'true');
+      localStorage.setItem(STORAGE_KEY, 'true');
     }
   };
 

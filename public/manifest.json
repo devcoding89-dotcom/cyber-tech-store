@@ -1,9 +1,12 @@
 {
+  "id": "/",
   "name": "Cyber Tech Store",
   "short_name": "CyberTech",
   "description": "Premium gadgets, phones, chargers & powerbanks",
-  "start_url": "/",
+  "start_url": "/#home",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "browser"],
   "background_color": "#030712",
   "theme_color": "#3B82F6",
   "orientation": "portrait",
