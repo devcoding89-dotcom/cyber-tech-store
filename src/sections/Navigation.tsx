@@ -37,20 +37,25 @@ export default function Navigation() {
     setIsMobileMenuOpen(false);
   };
 
-  const handleDownloadApp = () => {
-    const apkFileName = 'CyberTechStore-MobileApp.apk';
-    const sampleContent = 'Cyber Tech Store Mobile App Package';
-    const blob = new Blob([sampleContent], { type: 'application/vnd.android.package-archive' });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = apkFileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    localStorage.setItem('cybertech_app_downloaded', 'true');
+  const handleDownloadApp = async () => {
+    // Try native PWA install prompt (Android Chrome)
+    const deferredEvent = (window as any).__pwaInstallPrompt;
+    if (deferredEvent) {
+      await deferredEvent.prompt();
+      const { outcome } = await deferredEvent.userChoice;
+      if (outcome === 'accepted') {
+        localStorage.setItem('cybertech_app_downloaded', 'true');
+      }
+    } else {
+      // Fallback: show instructions
+      const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+      if (isIOS) {
+        alert('To install on iPhone:\n\n1. Tap the Share button (📤) at the bottom\n2. Tap "Add to Home Screen"\n3. Tap "Add"\n\nThe CyberTech icon will appear on your home screen!');
+      } else {
+        alert('To install on Android:\n\n1. Tap the 3-dot menu (⋮) in Chrome\n2. Tap "Add to Home screen"\n3. Tap "Add"\n\nThe CyberTech app icon will appear on your home screen!');
+      }
+      localStorage.setItem('cybertech_app_downloaded', 'true');
+    }
   };
 
   return (
